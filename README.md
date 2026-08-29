@@ -36,7 +36,7 @@ LRCLIB is the best free, no-key option for synced LRC and is what LyricFin uses.
 2. **Catalog** → refresh → install **LyricFin: Get Timed Lyrics** → restart when asked.
 3. Configure under **Plugins → LyricFin: Get Timed Lyrics**, or run from **Scheduled Tasks**.
 
-(That same repository URL also lists MusicFin and ExplicitFin.)
+(That same repository URL also lists the other Fin plugins: MusicFin, ExplicitFin, LyricFin, and ArtistFin.)
 
 ## Build locally
 
