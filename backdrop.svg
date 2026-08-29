@@ -1,102 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="1920"
-   height="1080"
-   viewBox="0 0 1920 1080"
-   version="1.1"
-   id="svg5"
-   sodipodi:docname="LyricFin-backdrop.svg"
-   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview5"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="0.55185185"
-     inkscape:cx="746.57718"
-     inkscape:cy="500.13423"
-     inkscape:window-width="2512"
-     inkscape:window-height="1403"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg5" />
-  <defs
-     id="defs1">
-    <style
-       type="text/css"
-       id="style1"><![CDATA[
-      .title {
-        font-family: "Nunito", "Quicksand", "Comfortaa", "Arial Rounded MT Bold", ui-rounded, sans-serif;
-        font-weight: 700;
-        font-size: 236px;
-        fill: #ffffff;
-        letter-spacing: -0.015em;
-      }
-    ]]></style>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#11111b"/>
+      <stop offset="55%" stop-color="#e64553"/>
+      <stop offset="100%" stop-color="#04a5e5"/>
+    </linearGradient>
   </defs>
-  <rect
-     width="1920"
-     height="1080"
-     fill="#e64553"
-     id="rect1" />
-  <g
-     transform="translate(204.000, 220.000) scale(13.33333333)"
-     id="g5">
-    <rect
-       width="40"
-       height="40"
-       x="4"
-       y="4"
-       rx="4"
-       fill="#e64553"
-       id="rect2" />
-    <path
-       fill="#ffffff"
-       d="M 24 10 C 20.19 10 7.92 32.24 9.79 36 C 11.66 39.75 36.36 39.71 38.21 36 C 40.25 32.29 27.81 10 24 10 Z M 33.31 32.74 C 32.1 35.17 15.92 35.2 14.69 32.74 C 13.46 30.28 21.5 15.71 24 15.71 C 26.5 15.71 34.52 30.31 33.31 32.74 Z M 24 21.04 C 22.74 21.04 18.66 28.42 19.28 29.67 C 19.9 30.92 28.1 30.9 28.71 29.67 C 29.32 28.44 25.26 21.04 24 21.04 Z"
-       id="path2" />
-    <rect
-       width="14"
-       height="14"
-       x="28"
-       y="28"
-       rx="2.5"
-       fill="#04a5e5"
-       id="rect3" />
-    <path
-       fill="#ffffff"
-       transform="translate(30.5, 30.5) scale(0.216)"
-       d="M 39.855 31.811 A 2.763 2.763 0 0 1 37.48 33.827 A 150.4 150.4 0 0 1 17.285 34.745 L 10.907 40.258 H 10.373 A 1.695 1.695 0 0 1 7.044 40.258 H 6.956 L 6.956 34.17 C 5.806 34.07 4.656 33.958 3.507 33.828 A 2.763 2.763 0 0 1 1.132 31.812 A 92.124 92.124 0 0 1 1.132 2.979 A 2.763 2.763 0 0 1 3.507 0.963 A 150.236 150.236 0 0 1 37.477 0.963 A 2.763 2.763 0 0 1 39.852 2.979 A 92.124 92.124 0 0 1 39.855 31.811 Z"
-       id="path3" />
-    <rect
-       fill="#04a5e5"
-       x="32.5"
-       y="33"
-       width="5"
-       height="1"
-       rx="0.5"
-       id="rect4" />
-    <rect
-       fill="#04a5e5"
-       x="32.5"
-       y="35"
-       width="3.5"
-       height="1"
-       rx="0.5"
-       id="rect5" />
+  <rect width="1920" height="1080" fill="url(#g)"/>
+  <g transform="translate(760,340) scale(8)">
+    <rect width="40" height="40" x="4" y="4" rx="4" fill="#e64553"/>
+    <path fill="#ffffff" opacity="0.95" d="M 24 10 C 20.19 10 7.92 32.24 9.79 36 C 11.66 39.75 36.36 39.71 38.21 36 C 40.25 32.29 27.81 10 24 10 Z M 33.31 32.74 C 32.1 35.17 15.92 35.2 14.69 32.74 C 13.46 30.28 21.5 15.71 24 15.71 C 26.5 15.71 34.52 30.31 33.31 32.74 Z M 24 21.04 C 22.74 21.04 18.66 28.42 19.28 29.67 C 19.9 30.92 28.1 30.9 28.71 29.67 C 29.32 28.44 25.26 21.04 24 21.04 Z"/>
+    <rect width="14" height="14" x="28" y="28" rx="2.5" fill="#04a5e5"/>
+    <path fill="#ffffff" transform="translate(30.5, 30.5) scale(0.216)" d="M 39.855 31.811 A 2.763 2.763 0 0 1 37.48 33.827 A 150.4 150.4 0 0 1 17.285 34.745 L 10.907 40.258 H 10.373 A 1.695 1.695 0 0 1 7.044 40.258 H 6.956 L 6.956 34.17 C 5.806 34.07 4.656 33.958 3.507 33.828 A 2.763 2.763 0 0 1 1.132 31.812 A 92.124 92.124 0 0 1 1.132 2.979 A 2.763 2.763 0 0 1 3.507 0.963 A 150.236 150.236 0 0 1 37.477 0.963 A 2.763 2.763 0 0 1 39.852 2.979 A 92.124 92.124 0 0 1 39.855 31.811 Z"/>
+    <rect fill="#04a5e5" x="32.5" y="33" width="5" height="1" rx="0.5"/>
+    <rect fill="#04a5e5" x="32.5" y="35" width="3.5" height="1" rx="0.5"/>
   </g>
-  <text
-     class="title"
-     x="820"
-     y="580"
-     dominant-baseline="central"
-     id="text5">LyricFin</text>
 </svg>
