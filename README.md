@@ -38,9 +38,8 @@ LRCLIB is the best free, no-key option for synced LRC and is what LyricFin uses.
    - Name: `FinPlugins` (or whatever :P )
    - URL: `https://raw.githubusercontent.com/TidBits16/FinPlugins/main/manifest.json`
    <br>
-   <br>
    (p.s. this bundle includes my other FinPlugins since they are designed to work together. ***they are not required to install!***)
-
+<br>
 <center><strong>**Then Restart JellyFin!**</strong></center>
 
 **Step 2**
