@@ -1,4 +1,12 @@
+<p align="center">
+  <img src="logo.svg" alt="LyricFin" width="128" height="128">
+</p>
+
 # LyricFin: Get Timed Lyrics
+
+<p align="center">
+  <img src="backdrop.svg" alt="LyricFin backdrop" width="100%">
+</p>
 
 A Jellyfin plugin that fetches **timed LRC** lyrics from [LRCLIB](https://lrclib.net/) - synced only, no plain-text fallback.
 
