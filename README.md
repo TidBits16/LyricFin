@@ -1,3 +1,5 @@
+<div align="center">
+
 <p align="center">
   <img src="logo.svg" alt="LyricFin" width="128" height="128">
 </p>
@@ -68,3 +70,4 @@ Designed for **Jellyfin 10.11+** (you probably have this already :D)
     <img src="repo_graphics/fin-family.svg" alt="Fin plugins" width="360">
   </a>
 </p>
+</div>
