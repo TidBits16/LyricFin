@@ -12,4 +12,19 @@ public class PluginConfiguration : BasePluginConfiguration
     /// force fetch clears any existing lyrics on those tracks.
     /// </summary>
     public bool SkipInstrumentals { get; set; } = true;
+
+    /// <summary>Comma-separated suffix/prefix markers stripped from titles before lookup (same as MusicFin).</summary>
+    public string IgnoreTitleMarkers { get; set; } = "🅴,[Explicit]";
+
+    public IReadOnlyList<string> EffectiveIgnoreTitleMarkers
+        => ParseList(IgnoreTitleMarkers, Titles.DefaultIgnoreTitleMarkers);
+
+    private static IReadOnlyList<string> ParseList(string raw, IReadOnlyList<string> fallback)
+    {
+        var items = (raw ?? string.Empty)
+            .Split([',', ';', '\n'], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        return items.Count > 0 ? items : fallback;
+    }
 }

@@ -4,11 +4,7 @@ namespace Jellyfin.Plugin.LyricFin;
 
 public static partial class Titles
 {
-    [GeneratedRegex(@"\s*[\[\(]?🅴[\]\)]?\s*", RegexOptions.Compiled)]
-    private static partial Regex ExplicitEmoji();
-
-    [GeneratedRegex(@"\s*[\[\(]\s*(?:E|Explicit)\s*[\]\)]\s*", RegexOptions.IgnoreCase | RegexOptions.Compiled)]
-    private static partial Regex ExplicitBracket();
+    public static readonly IReadOnlyList<string> DefaultIgnoreTitleMarkers = ["🅴", "[Explicit]"];
 
     [GeneratedRegex(@"[\[\(]\s*Instrumental(?:\s+Version)?\s*[\]\)]", RegexOptions.IgnoreCase | RegexOptions.Compiled)]
     private static partial Regex InstrumentalMark();
@@ -17,22 +13,48 @@ public static partial class Titles
     public static bool IsInstrumental(string? title)
         => !string.IsNullOrWhiteSpace(title) && InstrumentalMark().IsMatch(title);
 
-    /// <summary>Strip ExplicitFin-style marks so lyric lookups still match.</summary>
-    public static string CleanForSearch(string value)
-    {
-        var s = (value ?? string.Empty).Trim();
-        if (s.Length == 0)
-        {
-            return s;
-        }
+    /// <summary>Strip configured markers (same behavior as MusicFin) before lyric lookup.</summary>
+    public static string CleanForSearch(string value, IReadOnlyList<string>? markers = null)
+        => StripMark(value ?? string.Empty, markers);
 
-        s = ExplicitEmoji().Replace(s, " ");
-        s = ExplicitBracket().Replace(s, " ");
-        while (s.Contains("  ", StringComparison.Ordinal))
+    public static string StripMark(string name, IReadOnlyList<string>? markers = null)
+    {
+        var s = name.Trim();
+        foreach (var token in markers ?? DefaultIgnoreTitleMarkers)
         {
-            s = s.Replace("  ", " ", StringComparison.Ordinal);
+            s = StripToken(s, token);
         }
 
         return s.Trim();
+    }
+
+    private static string StripToken(string name, string token)
+    {
+        var mark = token.Trim();
+        if (mark.Length == 0)
+        {
+            return name;
+        }
+
+        var s = name;
+        foreach (var edge in new[] { mark, mark + " ", " " + mark })
+        {
+            if (s.StartsWith(edge, StringComparison.Ordinal))
+            {
+                s = s[edge.Length..].TrimStart();
+                break;
+            }
+        }
+
+        foreach (var edge in new[] { mark, " " + mark, mark + " " })
+        {
+            if (s.EndsWith(edge, StringComparison.Ordinal))
+            {
+                s = s[..^edge.Length].TrimEnd();
+                break;
+            }
+        }
+
+        return s;
     }
 }

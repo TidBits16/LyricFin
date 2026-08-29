@@ -97,7 +97,8 @@ public class LyricEngine
                     return;
                 }
 
-                var ok = await ProcessTrackAsync(track, cancellationToken).ConfigureAwait(false);
+                var ok = await ProcessTrackAsync(track, cfg.EffectiveIgnoreTitleMarkers, cancellationToken)
+                    .ConfigureAwait(false);
                 if (ok)
                 {
                     Interlocked.Increment(ref saved);
@@ -142,16 +143,19 @@ public class LyricEngine
         return new LyricRunResult(saved, failed, skipped, cleared);
     }
 
-    private async Task<bool> ProcessTrackAsync(Audio track, CancellationToken cancellationToken)
+    private async Task<bool> ProcessTrackAsync(
+        Audio track,
+        IReadOnlyList<string> markers,
+        CancellationToken cancellationToken)
     {
-        var title = Titles.CleanForSearch(track.Name ?? string.Empty);
+        var title = Titles.CleanForSearch(track.Name ?? string.Empty, markers);
         var artist = PrimaryArtist(track);
         if (title.Length == 0 || artist.Length == 0)
         {
             return false;
         }
 
-        var album = Titles.CleanForSearch(track.Album ?? string.Empty);
+        var album = Titles.CleanForSearch(track.Album ?? string.Empty, markers);
         double? duration = null;
         if (track.RunTimeTicks is > 0)
         {
@@ -189,13 +193,13 @@ public class LyricEngine
         var artists = track.Artists;
         if (artists is { Count: > 0 } && !string.IsNullOrWhiteSpace(artists[0]))
         {
-            return Titles.CleanForSearch(artists[0]);
+            return artists[0].Trim();
         }
 
         var albumArtists = track.AlbumArtists;
         if (albumArtists is { Count: > 0 } && !string.IsNullOrWhiteSpace(albumArtists[0]))
         {
-            return Titles.CleanForSearch(albumArtists[0]);
+            return albumArtists[0].Trim();
         }
 
         return string.Empty;

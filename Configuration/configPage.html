@@ -26,6 +26,15 @@
                     </div>
 
                     <div class="verticalSection">
+                        <h3 class="checkboxListLabel">Matching</h3>
+                        <div class="inputContainer">
+                            <label class="inputLabel inputLabelUnfocused" for="IgnoreTitleMarkers">Ignore special characters / phrases</label>
+                            <input is="emby-input" type="text" id="IgnoreTitleMarkers" />
+                            <div class="fieldDescription">Comma-separated markers stripped from track titles before lookup (same as MusicFin), e.g. 🅴 or [Explicit].</div>
+                        </div>
+                    </div>
+
+                    <div class="verticalSection">
                         <h3 class="checkboxListLabel">Fetch</h3>
                         <button is="emby-button" type="button" id="FetchAllBtn" class="raised block">
                             <span>Fetch all lyrics</span>
@@ -58,12 +67,15 @@
                     typeof config.Workers === 'number' ? config.Workers : 1;
                 document.querySelector('#SkipInstrumentals').checked =
                     config.SkipInstrumentals !== false;
+                document.querySelector('#IgnoreTitleMarkers').value =
+                    config.IgnoreTitleMarkers ?? '🅴,[Explicit]';
             }
 
             function saveConfig() {
                 return ApiClient.getPluginConfiguration(LfConfig.pluginUniqueId).then(function (config) {
                     config.Workers = parseInt(document.querySelector('#Workers').value, 10) || 0;
                     config.SkipInstrumentals = !!document.querySelector('#SkipInstrumentals').checked;
+                    config.IgnoreTitleMarkers = document.querySelector('#IgnoreTitleMarkers').value;
                     return ApiClient.updatePluginConfiguration(LfConfig.pluginUniqueId, config);
                 });
             }
