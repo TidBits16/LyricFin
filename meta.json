@@ -5,8 +5,9 @@
   "overview": "Timed LRC lyrics via LRCLIB.",
   "owner": "TidBits16",
   "category": "Metadata",
-  "imageUrl": "",
-  "version": "1.0.0.0",
+  "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/logo.png",
+  "version": "1.0.1.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Initial release: missing-only scheduled task, force Fetch all in settings, synced LRC preferred."
+  "changelog": "Add plugin catalog icon.",
+  "imagePath": "logo.png"
 }

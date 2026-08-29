@@ -9,6 +9,14 @@
     "imageUrl": "",
     "versions": [
       {
+        "version": "1.0.1.0",
+        "changelog": "Add plugin catalog icon.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.1.0/lyricfin_1.0.1.0.zip",
+        "checksum": "ce7d558e56f24883708e72aa20deb293",
+        "timestamp": "2026-08-29T01:39:24Z"
+      },
+      {
         "version": "1.0.0.0",
         "changelog": "Initial release: missing-only scheduled task, force Fetch all in settings, synced LRC preferred.",
         "targetAbi": "10.11.0.0",
