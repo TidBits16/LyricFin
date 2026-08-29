@@ -67,7 +67,7 @@ public sealed class LrcLibClient
             }
         }
 
-        // 3) Search — pick the best result that has synced lyrics (prefer close duration).
+        // 3) Search - pick the best result that has synced lyrics (prefer close duration).
         return await SearchBestSyncedAsync(title, artist, album, durationSeconds, cancellationToken)
             .ConfigureAwait(false);
     }
@@ -176,7 +176,7 @@ public sealed class LrcLibClient
         // If we have a local duration, require a reasonably close match (±8s) when possible.
         if (best is not null && durationSeconds is > 0 && bestDelta < double.MaxValue && bestDelta > 8)
         {
-            // Still return it — better than nothing for force/missing fills — but prefer tighter when available.
+            // Still return it - better than nothing for force/missing fills - but prefer tighter when available.
             // Only reject extreme mismatches.
             if (bestDelta > 30)
             {

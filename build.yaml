@@ -1,6 +1,6 @@
 name: "LyricFin: Get Timed Lyrics"
 guid: "59dd884e-2511-4dbf-8f89-761c3e2e0dee"
-version: "1.0.2.0"
+version: "1.0.3.0"
 targetAbi: "10.11.0.0"
 framework: "net9.0"
 overview: "Timed LRC lyrics via LRCLIB"
@@ -9,6 +9,6 @@ category: "Metadata"
 owner: "TidBits16"
 artifacts:
   - "Jellyfin.Plugin.LyricFin.dll"
-  - "logo.png"
+  - "backdrop.svg"
 changelog: >
-  Refresh branding: flatter logo + 1920x1080 backdrop assets.
+  Use 1920x1080 backdrop SVG as the Jellyfin plugin catalog icon.

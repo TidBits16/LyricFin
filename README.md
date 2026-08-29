@@ -1,6 +1,6 @@
 # LyricFin: Get Timed Lyrics
 
-A Jellyfin plugin that fetches **timed LRC** lyrics from [LRCLIB](https://lrclib.net/) — synced only, no plain-text fallback.
+A Jellyfin plugin that fetches **timed LRC** lyrics from [LRCLIB](https://lrclib.net/) - synced only, no plain-text fallback.
 
 **Jellyfin 10.11+** · scheduled task + one settings button.
 
@@ -10,8 +10,8 @@ Jellyfin’s stock LrcLib provider often leaves you without usable timed lyrics.
 
 ## How it works
 
-1. **Scheduled task** (`LyricFin: Get Timed Lyrics`) — fills tracks that are **missing** lyrics.
-2. **Settings → Fetch all lyrics** — force-refetch for every track (overwrites when timed LRC is found).
+1. **Scheduled task** (`LyricFin: Get Timed Lyrics`) - fills tracks that are **missing** lyrics.
+2. **Settings → Fetch all lyrics** - force-refetch for every track (overwrites when timed LRC is found).
 3. Lookup order: LRCLIB `/api/get` (with duration) → get without album → `/api/search` for the best synced match.
 4. ExplicitFin-style marks (`🅴`, `[Explicit]`, …) are stripped from titles before searching.
 
