@@ -11,9 +11,14 @@ Jellyfin’s stock LrcLib provider often leaves you without usable timed lyrics.
 ## How it works
 
 1. **Scheduled task** (`LyricFin: Get Timed Lyrics`) - fills tracks that are **missing** lyrics.
-2. **Settings → Fetch all lyrics** - force-refetch for every track (overwrites when timed LRC is found).
+2. **Settings → Fetch all lyrics** - queues `LyricFin: Fetch All Lyrics` (force overwrite). Runs as a scheduled task so the browser request cannot time out.
 3. Lookup order: LRCLIB `/api/get` (with duration) → get without album → `/api/search` for the best synced match.
 4. ExplicitFin-style marks (`🅴`, `[Explicit]`, …) are stripped from titles before searching.
+5. **Skip (Instrumental) titles** (on by default): scheduled runs ignore `(Instrumental)` / `[Instrumental]`; force fetch **clears** lyrics on those tracks.
+
+## Providers
+
+LRCLIB is the best free, no-key option for synced LRC and is what LyricFin uses. Alternatives exist (Musixmatch, NetEase, Megalobiz via scrapers, Spotify/Musixmatch proxies) but usually need API keys, ToS risk, or brittle scraping — not wired in yet.
 
 ## Install
 

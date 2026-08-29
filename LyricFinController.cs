@@ -1,5 +1,6 @@
 using System.Net.Mime;
 using MediaBrowser.Common.Api;
+using MediaBrowser.Model.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,34 +13,26 @@ namespace Jellyfin.Plugin.LyricFin;
 [Route("LyricFin")]
 public sealed class LyricFinController : ControllerBase
 {
-    private readonly LyricEngine _engine;
+    private readonly ITaskManager _tasks;
 
-    public LyricFinController(LyricEngine engine)
+    public LyricFinController(ITaskManager tasks)
     {
-        _engine = engine;
+        _tasks = tasks;
     }
 
-    /// <summary>Force-fetch timed lyrics for every audio track (overwrites existing).</summary>
+    /// <summary>
+    /// Queue a force-fetch of timed lyrics for every audio track (runs as a scheduled task so the UI request cannot time out).
+    /// </summary>
     [HttpPost("FetchAll")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<FetchAllResponse>> FetchAll(CancellationToken cancellationToken)
+    public ActionResult<FetchAllResponse> FetchAll()
     {
-        var result = await _engine.RunAsync(force: true, new Progress<double>(), cancellationToken)
-            .ConfigureAwait(false);
-        return Ok(new FetchAllResponse
-        {
-            Saved = result.Saved,
-            Missed = result.Missed,
-            Skipped = result.Skipped
-        });
+        _tasks.CancelIfRunningAndQueue<LyricForceTask>();
+        return Ok(new FetchAllResponse { Queued = true });
     }
 }
 
 public sealed class FetchAllResponse
 {
-    public int Saved { get; set; }
-
-    public int Missed { get; set; }
-
-    public int Skipped { get; set; }
+    public bool Queued { get; set; }
 }

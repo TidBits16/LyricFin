@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.0.3.0",
+  "version": "1.0.4.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Use 1920x1080 backdrop SVG as the Jellyfin plugin catalog icon.",
+  "changelog": "Skip (Instrumental) titles by default; force fetch clears their lyrics. Queue force-all as a scheduled task so the UI no longer times out.",
   "imagePath": "backdrop.svg"
 }

@@ -19,7 +19,7 @@ public class LyricLibraryTask : IScheduledTask
     public string Key => "LyricFinLibrary";
 
     public string Description =>
-        "Fetches missing timed LRC lyrics from LRCLIB (synced only).";
+        "Fetches missing timed LRC lyrics from LRCLIB (synced only). Skips (Instrumental) titles when enabled.";
 
     public string Category => "Library";
 

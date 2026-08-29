@@ -36,6 +36,7 @@ public class LyricEngine
         var cfg = Plugin.Instance?.Configuration ?? new PluginConfiguration();
         var workers = cfg.Workers <= 0 ? 1 : cfg.Workers;
         workers = Math.Clamp(workers, 1, 4);
+        var skipInstrumentals = cfg.SkipInstrumentals;
 
         var tracks = _library.GetItemList(new InternalItemsQuery
         {
@@ -43,30 +44,59 @@ public class LyricEngine
             Recursive = true
         }).OfType<Audio>().Where(t => t.Id != Guid.Empty).ToList();
 
-        var targets = force
-            ? tracks
-            : tracks.Where(t => t.HasLyrics != true).ToList();
+        var instrumentals = skipInstrumentals
+            ? tracks.Where(t => Titles.IsInstrumental(t.Name)).ToList()
+            : [];
+        var nonInstrumentals = skipInstrumentals
+            ? tracks.Where(t => !Titles.IsInstrumental(t.Name)).ToList()
+            : tracks;
+
+        // Force: clear lyrics on instrumentals. Missing-only: leave them alone (count as skipped).
+        var clearTargets = force ? instrumentals : [];
+        var fetchTargets = force
+            ? nonInstrumentals
+            : nonInstrumentals.Where(t => t.HasLyrics != true).ToList();
+
+        var skipped = tracks.Count - fetchTargets.Count - clearTargets.Count;
 
         _logger.LogInformation(
-            "LyricFin: {Targets}/{Total} tracks ({Mode}), {Workers} workers",
-            targets.Count,
+            "LyricFin: fetch {Fetch}/{Total}, clear instrumentals {Clear} ({Mode}), {Workers} workers, skipInstrumentals={Skip}",
+            fetchTargets.Count,
             tracks.Count,
+            clearTargets.Count,
             force ? "force all" : "missing only",
-            workers);
+            workers,
+            skipInstrumentals);
 
         var saved = 0;
-        var skipped = tracks.Count - targets.Count;
         var failed = 0;
+        var cleared = 0;
         var done = 0;
-        var total = Math.Max(1, targets.Count);
+        var workItems = clearTargets.Count + fetchTargets.Count;
+        var total = Math.Max(1, workItems);
 
         using var gate = new SemaphoreSlim(workers, workers);
-        await Task.WhenAll(targets.Select(async track =>
+
+        async Task WorkAsync(Audio track, bool clearOnly)
         {
             await gate.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
                 cancellationToken.ThrowIfCancellationRequested();
+                if (clearOnly)
+                {
+                    if (track.HasLyrics == true)
+                    {
+                        await _lyrics.DeleteLyricsAsync(track).ConfigureAwait(false);
+                        Interlocked.Increment(ref cleared);
+                        _logger.LogInformation(
+                            "LyricFin cleared lyrics on instrumental {Id}: {Name}",
+                            track.Id,
+                            track.Name);
+                    }
+                    return;
+                }
+
                 var ok = await ProcessTrackAsync(track, cancellationToken).ConfigureAwait(false);
                 if (ok)
                 {
@@ -92,18 +122,24 @@ public class LyricEngine
                 progress.Report(100.0 * n / total);
                 gate.Release();
             }
-        })).ConfigureAwait(false);
+        }
+
+        await Task.WhenAll(
+            clearTargets.Select(t => WorkAsync(t, clearOnly: true))
+                .Concat(fetchTargets.Select(t => WorkAsync(t, clearOnly: false))))
+            .ConfigureAwait(false);
 
         progress.Report(100);
         _logger.LogInformation(
-            "LyricFin finished: saved {Saved}, no timed lyrics {Missed}, already had {Skipped}, http {Http}/{Cache} cache",
+            "LyricFin finished: saved {Saved}, cleared {Cleared}, no timed lyrics {Missed}, skipped {Skipped}, http {Http}/{Cache} cache",
             saved,
+            cleared,
             failed,
             skipped,
             _lrclib.HttpCount,
             _lrclib.CacheHits);
 
-        return new LyricRunResult(saved, failed, skipped);
+        return new LyricRunResult(saved, failed, skipped, cleared);
     }
 
     private async Task<bool> ProcessTrackAsync(Audio track, CancellationToken cancellationToken)
@@ -166,4 +202,4 @@ public class LyricEngine
     }
 }
 
-public readonly record struct LyricRunResult(int Saved, int Missed, int Skipped);
+public readonly record struct LyricRunResult(int Saved, int Missed, int Skipped, int Cleared);
