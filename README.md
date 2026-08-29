@@ -21,14 +21,14 @@ Jellyfin’s stock LrcLib provider often leaves you without usable timed lyrics.
 ## How it works
 
 <strong>Scheduled task</strong> (`LyricFin: Get Timed Lyrics`) - fills tracks that are <strong>missing</strong> lyrics.
-<strong>Settings → Fetch all lyrics</strong> - queues `LyricFin: Fetch All Lyrics` (force overwrite). Runs as a scheduled task so the browser request cannot time out.
-Lookup order: LRCLIB `/api/get` (with duration) → get without album → `/api/search` for the best synced match.
+<strong>Settings --> Fetch all lyrics</strong> - queues `LyricFin: Fetch All Lyrics` (force overwrite). Runs as a scheduled task so the browser request cannot time out.
+Lookup order: LRCLIB `/api/get` (with duration) --> get without album --> `/api/search` for the best synced match.
 ExplicitFin-style marks (`🅴`, `[Explicit]`, …) are stripped from titles before searching (configurable, same ignore list as MusicFin).
 <strong>Skip (Instrumental) titles</strong> (on by default): scheduled runs ignore `(Instrumental)` / `[Instrumental]`; force fetch <strong>clears</strong> lyrics on those tracks.
 
 ## Providers
 
-LRCLIB is the best free, no-key option for synced LRC and is what LyricFin uses. Alternatives exist (Musixmatch, NetEase, Megalobiz via scrapers, Spotify/Musixmatch proxies) but usually need API keys, ToS risk, or brittle scraping — not wired in yet.
+LRCLIB is the best free, no-key option for synced LRC and is what LyricFin uses. Alternatives exist (Musixmatch, NetEase, Megalobiz via scrapers, Spotify/Musixmatch proxies) but usually need API keys, ToS risk, or brittle scraping - not wired in yet.
 
 ## Installing
 <strong>Step 1</strong>
@@ -67,8 +67,12 @@ The release zip will be in `dist/`.
 
 Designed for <strong>Jellyfin 10.11+</strong> (you probably have this already :D)
 <p align="center">
-  <a href="https://github.com/TidBits16/FinPlugins">
-    <img src="repo_graphics/fin-family.svg" alt="Fin plugins" width="360">
-  </a>
+  <a href="https://github.com/TidBits16/MusicFin"><img src="repo_graphics/musicfin.svg" alt="MusicFin" width="72" height="72"></a>
+  &nbsp;
+  <a href="https://github.com/TidBits16/ExplicitFin"><img src="repo_graphics/explicitfin.svg" alt="ExplicitFin" width="72" height="72"></a>
+  &nbsp;
+  <a href="https://github.com/TidBits16/LyricFin"><img src="repo_graphics/lyricfin.svg" alt="LyricFin" width="72" height="72"></a>
+  &nbsp;
+  <a href="https://github.com/TidBits16/ArtistFin"><img src="repo_graphics/artistfin.svg" alt="ArtistFin" width="72" height="72"></a>
 </p>
 </div>
