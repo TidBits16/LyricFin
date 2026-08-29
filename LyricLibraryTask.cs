@@ -47,7 +47,7 @@ public class LyricLibraryTask : IScheduledTask
             new TaskTriggerInfo
             {
                 Type = TaskTriggerInfoType.IntervalTrigger,
-                IntervalTicks = TimeSpan.FromHours(24).Ticks
+                IntervalTicks = TimeSpan.FromDays(7).Ticks
             }
         ];
     }
