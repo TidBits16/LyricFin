@@ -1,0 +1,12 @@
+{
+  "guid": "59dd884e-2511-4dbf-8f89-761c3e2e0dee",
+  "name": "LyricFin: Get Timed Lyrics",
+  "description": "Fetches timed LRC lyrics from LRCLIB for your music library.",
+  "overview": "Timed LRC lyrics via LRCLIB.",
+  "owner": "TidBits16",
+  "category": "Metadata",
+  "imageUrl": "",
+  "version": "1.0.0.0",
+  "targetAbi": "10.11.0.0",
+  "changelog": "Initial release: missing-only scheduled task, force Fetch all in settings, synced LRC preferred."
+}

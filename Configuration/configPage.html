@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>LyricFin: Get Timed Lyrics</title>
+</head>
+<body>
+    <div id="LfConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button">
+        <div data-role="content">
+            <div class="content-primary">
+                <form id="LfConfigForm">
+                    <div class="sectionTitleContainer flex align-items-center">
+                        <h2 class="sectionTitle">LyricFin: Get Timed Lyrics</h2>
+                    </div>
+                    <p>Fetches <strong>timed LRC</strong> lyrics from LRCLIB. The scheduled task only fills tracks that are missing lyrics. Use the button below to force-refresh everything.</p>
+
+                    <div class="verticalSection">
+                        <h3 class="checkboxListLabel">Fetch</h3>
+                        <button is="emby-button" type="button" id="FetchAllBtn" class="raised block">
+                            <span>Fetch all lyrics</span>
+                        </button>
+                        <div class="fieldDescription" id="FetchAllStatus" style="margin-top:0.5em">
+                            Overwrites existing lyrics when timed LRC is found. This can take a while on large libraries.
+                        </div>
+                    </div>
+
+                    <details class="verticalSection">
+                        <summary class="checkboxListLabel" style="cursor:pointer">Advanced</summary>
+                        <div class="inputContainer" style="margin-top:1em">
+                            <label class="inputLabel" for="Workers">Workers</label>
+                            <input is="emby-input" type="number" id="Workers" min="0" max="4" />
+                            <div class="fieldDescription">Concurrent tracks (LRCLIB prefers slow/polite clients). 0 or 1 recommended. Max 4.</div>
+                        </div>
+                    </details>
+
+                    <button is="emby-button" type="submit" class="raised button-submit block">
+                        <span>Save</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <script>
+            const LfConfig = { pluginUniqueId: '59dd884e-2511-4dbf-8f89-761c3e2e0dee' };
+
+            function applyConfig(config) {
+                document.querySelector('#Workers').value =
+                    typeof config.Workers === 'number' ? config.Workers : 1;
+            }
+
+            function saveConfig() {
+                return ApiClient.getPluginConfiguration(LfConfig.pluginUniqueId).then(function (config) {
+                    config.Workers = parseInt(document.querySelector('#Workers').value, 10) || 0;
+                    return ApiClient.updatePluginConfiguration(LfConfig.pluginUniqueId, config);
+                });
+            }
+
+            function fetchAll() {
+                var status = document.querySelector('#FetchAllStatus');
+                var btn = document.querySelector('#FetchAllBtn');
+                btn.disabled = true;
+                status.textContent = 'Fetching timed lyrics for all tracks…';
+                Dashboard.showLoadingMsg();
+                return ApiClient.ajax({
+                    type: 'POST',
+                    url: ApiClient.getUrl('LyricFin/FetchAll'),
+                    contentType: 'application/json',
+                    dataType: 'json'
+                }).then(function (result) {
+                    var saved = result && result.Saved || 0;
+                    var missed = result && result.Missed || 0;
+                    status.textContent = 'Done. Saved ' + saved + ' timed lyric file(s); ' + missed + ' without a timed match.';
+                    Dashboard.hideLoadingMsg();
+                }).catch(function () {
+                    status.textContent = 'Fetch failed. Check the Jellyfin log.';
+                    Dashboard.hideLoadingMsg();
+                }).then(function () {
+                    btn.disabled = false;
+                });
+            }
+
+            document.querySelector('#FetchAllBtn').addEventListener('click', function (e) {
+                e.preventDefault();
+                fetchAll();
+            });
+
+            document.querySelector('#LfConfigPage').addEventListener('pageshow', function () {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(LfConfig.pluginUniqueId).then(function (config) {
+                    applyConfig(config);
+                    Dashboard.hideLoadingMsg();
+                }).catch(function () {
+                    Dashboard.hideLoadingMsg();
+                });
+            });
+
+            document.querySelector('#LfConfigForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                Dashboard.showLoadingMsg();
+                saveConfig().then(function (result) {
+                    Dashboard.processPluginConfigurationUpdateResult(result);
+                }).catch(function () {
+                    Dashboard.hideLoadingMsg();
+                });
+                return false;
+            });
+        </script>
+    </div>
+</body>
+</html>
