@@ -28,21 +28,42 @@ Jellyfin’s stock LrcLib provider often leaves you without usable timed lyrics.
 
 LRCLIB is the best free, no-key option for synced LRC and is what LyricFin uses. Alternatives exist (Musixmatch, NetEase, Megalobiz via scrapers, Spotify/Musixmatch proxies) but usually need API keys, ToS risk, or brittle scraping — not wired in yet.
 
-## Install
+## Installing
+**Step 1**
+<p align="center">
+  <img src="repo_graphics/plugins.jpg" alt="Plugins Location" width="100%">
+</p>
 
-1. **Dashboard → Plugins → Repositories** → add:
-   - Name: `FinPlugins`
+**Dashboard --> Plugins --> Manage Repositories** --> **+ New Repository**:
+   - Name: `FinPlugins` (or whatever :P )
    - URL: `https://raw.githubusercontent.com/TidBits16/FinPlugins/main/manifest.json`
-2. **Catalog** → refresh → install **LyricFin: Get Timed Lyrics** → restart when asked.
-3. Configure under **Plugins → LyricFin: Get Timed Lyrics**, or run from **Scheduled Tasks**.
+   <br>
+   <br>
+   (p.s. this bundle includes my other FinPlugins since they are designed to work together. ***they are not required to install!***)
 
-(That same repository URL also lists the other Fin plugins: MusicFin, ExplicitFin, LyricFin, and ArtistFin.)
+<center><strong>**Then Restart JellyFin!**</strong></center>
 
-## Build locally
+**Step 2**
+<p align="center">
+  <img src="repo_graphics/where_to_find.jpg" alt="Where To Find Repo" width="100%">
+</p>
+
+**Plugins** --> **All** --> **LyricFin: Get Timed Lyrics** --> **Install**
+
+<center><strong>**Once Installed, Restart JellyFin Again!**</strong></center>
+
+## Build Locally
+
+For development or packaging your own build:
 
 ```bash
 dotnet build Jellyfin.Plugin.LyricFin.csproj -c Release
 ./scripts/package.sh
 ```
 
-The release zip lands in `dist/`.
+The release zip will be in `dist/`.
+
+Designed for **Jellyfin 10.11+** (you probably have this already :D )
+<p align="center">
+  <img src="logo.svg" alt="LyricFin Logo" width="128" height="128">
+</p>
