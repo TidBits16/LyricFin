@@ -18,7 +18,7 @@ Jellyfin’s stock LrcLib provider often leaves you without usable timed lyrics.
 ## Install
 
 1. **Dashboard → Plugins → Repositories** → add:
-   - Name: `Fin Plugins`
+   - Name: `FinPlugins`
    - URL: `https://raw.githubusercontent.com/TidBits16/FinPlugins/main/manifest.json`
 2. **Catalog** → refresh → install **LyricFin: Get Timed Lyrics** → restart when asked.
 3. Configure under **Plugins → LyricFin: Get Timed Lyrics**, or run from **Scheduled Tasks**.
