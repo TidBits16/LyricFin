@@ -40,7 +40,7 @@
                             <span>Fetch all lyrics</span>
                         </button>
                         <div class="fieldDescription" id="FetchAllStatus" style="margin-top:0.5em">
-                            Queues <strong>LyricFin: Fetch All Lyrics</strong> under Dashboard → Scheduled Tasks. Overwrites when timed LRC is found.
+                            Queues <strong>LyricFin: Fetch All Lyrics</strong> under Dashboard --> Scheduled Tasks. Overwrites when timed LRC is found.
                         </div>
                     </div>
 
@@ -92,7 +92,7 @@
                     contentType: 'application/json',
                     dataType: 'json'
                 }).then(function () {
-                    status.textContent = 'Queued. Watch Dashboard → Scheduled Tasks → LyricFin: Fetch All Lyrics for progress and logs.';
+                    status.textContent = 'Queued. Watch Dashboard --> Scheduled Tasks --> LyricFin: Fetch All Lyrics for progress and logs.';
                     Dashboard.hideLoadingMsg();
                 }).catch(function (err) {
                     var detail = (err && (err.message || err.statusText)) || 'unknown error';

@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.0.6.0",
+  "version": "1.0.7.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Add MusicFin-style Ignore special characters / phrases for lyric title lookup.",
+  "changelog": "Normalize arrow punctuation in UI copy and logs.",
   "imagePath": "backdrop.svg"
 }
