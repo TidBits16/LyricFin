@@ -1,34 +1,30 @@
 <div align="center">
-
-<p align="center">
-  <img src="logo.svg" alt="LyricFin" width="128" height="128">
-</p>
-
-# LyricFin: Get Timed Lyrics
-
 <p align="center">
   <img src="backdrop.svg" alt="LyricFin backdrop" width="100%">
 </p>
 
-A Jellyfin plugin that fetches <strong>timed LRC</strong> lyrics from <a href="https://lrclib.net/">LRCLIB</a> - synced only, no plain-text fallback.
+# LyricFin: Get Timed Lyrics
 
-<strong>Jellyfin 10.11+</strong> · scheduled task + one settings button.
+I found that the stock "LrcLib Lyrics" plugin struggles to fetch timed lyrics. It also has difficulty identifying songs so most of my collection was missing lyrics.
+<br>
+<strong>That's why I created my own lyric plugin.</strong>
+<br>
+<p align="center">
+  <img src="repo_graphics/lyricfin_meme.jpg" alt="LyricFin Meme" width="100%">
+</p>
 
-## Why
+LyricFin prefers <strong>timed LRC</strong> lyrics from <a href="https://lrclib.net/">LRCLIB</a> and also supports fallbacks to make sure all your tracks get identified.
 
-Jellyfin’s stock LrcLib provider often leaves you without usable timed lyrics. LyricFin talks to LRCLIB directly, keeps only `syncedLyrics`, and writes them as `.lrc` through Jellyfin’s lyric manager.
+It'll also remove lyrics on instrumental tracks *(can be disabled for the karaoke fans)!*
 
-## How it works
+And, it works with explicit symbols in the title (`🅴`, `[Explicit]`, ...)!
 
-<strong>Scheduled task</strong> (`LyricFin: Get Timed Lyrics`) - fills tracks that are <strong>missing</strong> lyrics.
-<strong>Settings --> Fetch all lyrics</strong> - queues `LyricFin: Fetch All Lyrics` (force overwrite). Runs as a scheduled task so the browser request cannot time out.
-Lookup order: LRCLIB `/api/get` (with duration) --> get without album --> `/api/search` for the best synced match.
-ExplicitFin-style marks (`🅴`, `[Explicit]`, …) are stripped from titles before searching (configurable, same ignore list as MusicFin).
-<strong>Skip (Instrumental) titles</strong> (on by default): scheduled runs ignore `(Instrumental)` / `[Instrumental]`; force fetch <strong>clears</strong> lyrics on those tracks.
+***Please sing responsibly!***
+
 
 ## Providers
 
-LRCLIB is the best free, no-key option for synced LRC and is what LyricFin uses. Alternatives exist (Musixmatch, NetEase, Megalobiz via scrapers, Spotify/Musixmatch proxies) but usually need API keys, ToS risk, or brittle scraping - not wired in yet.
+LRCLIB is the best free, no-key option for synced LRC and is what LyricFin uses by default. You can also use Musixmatch, NetEase, but they usually require keys (and I haven't come across many songs that these two cannot find lyrics for).
 
 ## Installing
 <strong>Step 1</strong>
