@@ -13,21 +13,24 @@ namespace Jellyfin.Plugin.LyricFin;
 [Route("LyricFin")]
 public sealed class LyricFinController : ControllerBase
 {
+    private readonly LyricEngine _engine;
     private readonly ITaskManager _tasks;
 
-    public LyricFinController(ITaskManager tasks)
+    public LyricFinController(LyricEngine engine, ITaskManager tasks)
     {
+        _engine = engine;
         _tasks = tasks;
     }
 
     /// <summary>
-    /// Queue a force-fetch of timed lyrics for every audio track (runs as a scheduled task so the UI request cannot time out).
+    /// Queue a force-fetch of timed lyrics for every audio track (runs as the scheduled task so the UI request cannot time out).
     /// </summary>
     [HttpPost("FetchAll")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public ActionResult<FetchAllResponse> FetchAll()
     {
-        _tasks.CancelIfRunningAndQueue<LyricForceTask>();
+        _engine.RequestForce();
+        _tasks.CancelIfRunningAndQueue<LyricLibraryTask>();
         return Ok(new FetchAllResponse { Queued = true });
     }
 }

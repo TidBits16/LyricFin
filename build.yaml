@@ -1,14 +1,14 @@
 name: "LyricFin: Get Timed Lyrics"
 guid: "59dd884e-2511-4dbf-8f89-761c3e2e0dee"
-version: "1.0.7.0"
+version: "1.0.8.0"
 targetAbi: "10.11.0.0"
 framework: "net9.0"
 overview: "Timed LRC lyrics via LRCLIB"
-description: "Scheduled-task plugin that fetches synced LRC lyrics from LRCLIB; force-fetch from settings."
+description: "Scheduled-task plugin that fetches synced LRC lyrics from LRCLIB; force-fetch from settings uses the same task."
 category: "Metadata"
 owner: "TidBits16"
 artifacts:
   - "Jellyfin.Plugin.LyricFin.dll"
   - "backdrop.svg"
 changelog: >
-  Add MusicFin-style Ignore special characters / phrases for lyric title lookup.
+  Use a single scheduled task; force-fetch from settings queues that same task.

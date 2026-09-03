@@ -14,6 +14,7 @@ public class LyricEngine
     private readonly ILyricManager _lyrics;
     private readonly LrcLibClient _lrclib;
     private readonly ILogger<LyricEngine> _logger;
+    private int _forceNext;
 
     public LyricEngine(
         ILibraryManager library,
@@ -25,6 +26,15 @@ public class LyricEngine
         _lyrics = lyrics;
         _lrclib = lrclib;
         _logger = logger;
+    }
+
+    /// <summary>Next scheduled run overwrites existing lyrics (settings button).</summary>
+    public void RequestForce() => Interlocked.Exchange(ref _forceNext, 1);
+
+    public Task<LyricRunResult> RunAsync(IProgress<double> progress, CancellationToken cancellationToken)
+    {
+        var force = Interlocked.Exchange(ref _forceNext, 0) == 1;
+        return RunAsync(force, progress, cancellationToken);
     }
 
     /// <param name="force">When true, refetch and overwrite even if lyrics already exist.</param>

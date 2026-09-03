@@ -12,7 +12,7 @@
                     <div class="sectionTitleContainer flex align-items-center">
                         <h2 class="sectionTitle">LyricFin: Get Timed Lyrics</h2>
                     </div>
-                    <p>Fetches <strong>timed LRC</strong> lyrics from LRCLIB. The scheduled task only fills tracks that are missing lyrics. Use the button below to queue a force-refresh (runs under Scheduled Tasks so it will not time out in the browser).</p>
+                    <p>Fetches <strong>timed LRC</strong> lyrics from LRCLIB. The scheduled task only fills tracks that are missing lyrics.</p>
 
                     <div class="checkboxContainer checkboxContainer-withDescription">
                         <label class="emby-checkbox-label">
@@ -34,22 +34,21 @@
                         </div>
                     </div>
 
-                    <div class="verticalSection">
-                        <h3 class="checkboxListLabel">Fetch</h3>
-                        <button is="emby-button" type="button" id="FetchAllBtn" class="raised block">
-                            <span>Fetch all lyrics</span>
-                        </button>
-                        <div class="fieldDescription" id="FetchAllStatus" style="margin-top:0.5em">
-                            Queues <strong>LyricFin: Fetch All Lyrics</strong> under Dashboard --> Scheduled Tasks. Overwrites when timed LRC is found.
-                        </div>
-                    </div>
-
                     <details class="verticalSection">
                         <summary class="checkboxListLabel" style="cursor:pointer">Advanced</summary>
                         <div class="inputContainer" style="margin-top:1em">
                             <label class="inputLabel" for="Workers">Workers</label>
                             <input is="emby-input" type="number" id="Workers" min="0" max="4" />
                             <div class="fieldDescription">Concurrent tracks (LRCLIB prefers slow/polite clients). 0 or 1 recommended. Max 4.</div>
+                        </div>
+                        <div class="verticalSection" style="margin-top:1.5em">
+                            <h3 class="checkboxListLabel">Force refresh</h3>
+                            <button is="emby-button" type="button" id="FetchAllBtn" class="raised block">
+                                <span>Fetch all lyrics</span>
+                            </button>
+                            <div class="fieldDescription" id="FetchAllStatus" style="margin-top:0.5em">
+                                Overwrites existing lyrics. Watch Dashboard --> Scheduled Tasks --> LyricFin: Get Timed Lyrics.
+                            </div>
                         </div>
                     </details>
 
@@ -92,7 +91,7 @@
                     contentType: 'application/json',
                     dataType: 'json'
                 }).then(function () {
-                    status.textContent = 'Queued. Watch Dashboard --> Scheduled Tasks --> LyricFin: Fetch All Lyrics for progress and logs.';
+                    status.textContent = 'Queued. Watch Dashboard --> Scheduled Tasks --> LyricFin: Get Timed Lyrics for progress and logs.';
                     Dashboard.hideLoadingMsg();
                 }).catch(function (err) {
                     var detail = (err && (err.message || err.statusText)) || 'unknown error';

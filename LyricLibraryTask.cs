@@ -19,7 +19,7 @@ public class LyricLibraryTask : IScheduledTask
     public string Key => "LyricFinLibrary";
 
     public string Description =>
-        "Fetches missing timed LRC lyrics from LRCLIB (synced only). Skips (Instrumental) titles when enabled.";
+        "Fetches missing timed LRC lyrics from LRCLIB. A force fetch from plugin settings uses this same task and overwrites existing lyrics.";
 
     public string Category => "Library";
 
@@ -27,7 +27,7 @@ public class LyricLibraryTask : IScheduledTask
     {
         try
         {
-            await _engine.RunAsync(force: false, progress, cancellationToken).ConfigureAwait(false);
+            await _engine.RunAsync(progress, cancellationToken).ConfigureAwait(false);
         }
         catch (OperationCanceledException)
         {

@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.0.7.0",
+  "version": "1.0.8.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Normalize arrow punctuation in UI copy and logs.",
+  "changelog": "Use a single scheduled task; force-fetch from settings queues that same task.",
   "imagePath": "backdrop.svg"
 }
