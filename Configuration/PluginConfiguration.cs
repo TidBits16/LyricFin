@@ -16,26 +16,24 @@ public class PluginConfiguration : BasePluginConfiguration
     /// <summary>Comma-separated suffix/prefix markers stripped from titles before lookup (same as MusicFin).</summary>
     public string IgnoreTitleMarkers { get; set; } = "🅴,[Explicit]";
 
-    /// <summary>How swear words are masked: None, Ending, Full.</summary>
+    /// <summary>How swear words are masked: None, Ending, Full, Root.</summary>
     public string CensorMode { get; set; } = "None";
 
     /// <summary>Mask character style: Asterisks, Dashes, Random.</summary>
     public string CensorSymbolStyle { get; set; } = "Asterisks";
 
-    /// <summary>One word per line (commas also fine). Empty falls back to the built-in list.</summary>
+    /// <summary>Word list with optional # Words / # Roots sections. Empty falls back to built-in.</summary>
     public string CensorWords { get; set; } = LyricCensor.DefaultWordListText;
 
     public IReadOnlyList<string> EffectiveIgnoreTitleMarkers
         => ParseList(IgnoreTitleMarkers, Titles.DefaultIgnoreTitleMarkers);
-
-    public IReadOnlyList<string> EffectiveCensorWords
-        => ParseList(CensorWords, LyricCensor.DefaultWordList);
 
     public CensorMode EffectiveCensorMode
         => (CensorMode ?? string.Empty).Trim().ToLowerInvariant() switch
         {
             "ending" => Configuration.CensorMode.Ending,
             "full" => Configuration.CensorMode.Full,
+            "root" => Configuration.CensorMode.Root,
             _ => Configuration.CensorMode.None,
         };
 

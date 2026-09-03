@@ -21,7 +21,6 @@
                         </label>
                         <div class="fieldDescription checkboxDescription">
                             Scheduled runs ignore titles marked <code>(Instrumental)</code> / <code>[Instrumental]</code>.
-                            Force fetch clears any existing lyrics on those tracks instead of looking them up.
                         </div>
                     </div>
 
@@ -42,30 +41,33 @@
                                 <span>Censor lyrics</span>
                             </label>
                             <div class="fieldDescription checkboxDescription">
-                                Mask swear words when lyrics are saved. Already-saved lyrics need Force refresh to re-censor.
+                                Mask swear words when lyrics are saved. May require Force refresh.
                             </div>
                         </div>
                         <div id="CensorOptions" style="display:none">
                             <div class="selectContainer">
                                 <label class="selectLabel" for="CensorMode">Mode</label>
                                 <select is="emby-select" id="CensorMode">
-                                    <option value="Ending">Ending — f***</option>
-                                    <option value="Full">Full — ****</option>
+                                    <option value="Root">Root — F***er</option>
+                                    <option value="Ending">First-Letter — F*****</option>
+                                    <option value="Full">Full — ******</option>
                                 </select>
                             </div>
                             <div class="selectContainer" id="CensorSymbolStyleRow">
                                 <label class="selectLabel" for="CensorSymbolStyle">Symbols</label>
                                 <select is="emby-select" id="CensorSymbolStyle">
-                                    <option value="Asterisks">Asterisks — f***</option>
-                                    <option value="Dashes">Dashes — f---</option>
-                                    <option value="Random">Random — f&amp;!$</option>
+                                    <option value="Asterisks">Asterisks — F***er</option>
+                                    <option value="Dashes">Dashes — F---er</option>
+                                    <option value="Random">Random — F&amp;!$er</option>
                                 </select>
                             </div>
-                            <div class="inputContainer" id="CensorWordsRow">
-                                <label class="textareaLabel" for="CensorWords">Word list</label>
-                                <textarea is="emby-textarea" id="CensorWords" rows="14" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;line-height:1.4"></textarea>
-                                <div class="fieldDescription">One word per line. Clear the box and Save to restore the built-in list.</div>
-                            </div>
+                            <details class="verticalSection" id="CensorWordsRow" style="margin-top:1em">
+                                <summary class="checkboxListLabel" style="cursor:pointer">Word list</summary>
+                                <div class="inputContainer" style="margin-top:1em">
+                                    <textarea is="emby-textarea" id="CensorWords" rows="14" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;line-height:1.4"></textarea>
+                                    <div class="fieldDescription">One word per line under # Words or # Roots (Clear and press Save to restore).</div>
+                                </div>
+                            </details>
                         </div>
                     </div>
 
@@ -78,12 +80,13 @@
                         </div>
                         <div class="verticalSection" style="margin-top:1.5em">
                             <h3 class="checkboxListLabel">Force refresh</h3>
-                            <button is="emby-button" type="button" id="FetchAllBtn" class="raised block">
-                                <span>Fetch all lyrics</span>
+                            <button is="emby-button" type="button" id="FetchAllBtn" class="raised block button-delete">
+                                <span>Force Fetch All Lyrics</span>
                             </button>
-                            <div class="fieldDescription" id="FetchAllStatus" style="margin-top:0.5em">
-                                Overwrites existing lyrics. Watch Dashboard --> Scheduled Tasks --> LyricFin: Get Timed Lyrics.
+                            <div class="fieldDescription" style="margin-top:0.5em">
+                                Overwrites existing lyrics! Don't use unless you know what you're doing!
                             </div>
+                            <div class="fieldDescription" id="FetchAllStatus" style="margin-top:0.5em"></div>
                         </div>
                     </details>
 
@@ -103,10 +106,13 @@
 
             function normalizeWordList(raw) {
                 return (raw || '')
-                    .split(/[\n\r,;]+/)
-                    .map(function (w) { return w.trim(); })
-                    .filter(Boolean)
-                    .join('\n');
+                    .replace(/\r\n/g, '\n')
+                    .replace(/\r/g, '\n')
+                    .split('\n')
+                    .map(function (w) { return w.trimEnd(); })
+                    .join('\n')
+                    .replace(/\n{3,}/g, '\n\n')
+                    .trim() + (raw && String(raw).trim() ? '\n' : '');
             }
 
             function applyConfig(config) {
@@ -119,11 +125,20 @@
                 var mode = config.CensorMode || 'None';
                 var enabled = mode !== 'None';
                 document.querySelector('#CensorLyrics').checked = enabled;
-                document.querySelector('#CensorMode').value =
-                    mode === 'Full' ? 'Full' : 'Ending';
+                var selectMode = 'Root';
+                if (mode === 'Full') {
+                    selectMode = 'Full';
+                } else if (mode === 'Ending' || mode === 'FirstLetter') {
+                    selectMode = 'Ending';
+                } else if (mode === 'Root') {
+                    selectMode = 'Root';
+                }
+                document.querySelector('#CensorMode').value = selectMode;
                 document.querySelector('#CensorSymbolStyle').value = config.CensorSymbolStyle || 'Asterisks';
-                document.querySelector('#CensorWords').value = normalizeWordList(
-                    config.CensorWords || config.ExtraCensorWords || '');
+                var words = config.CensorWords || config.ExtraCensorWords || '';
+                document.querySelector('#CensorWords').value = words
+                    ? normalizeWordList(words)
+                    : '';
                 syncCensorUi();
             }
 
@@ -154,7 +169,7 @@
                     contentType: 'application/json',
                     dataType: 'json'
                 }).then(function () {
-                    status.textContent = 'Queued. Watch Dashboard --> Scheduled Tasks --> LyricFin: Get Timed Lyrics for progress and logs.';
+                    status.textContent = 'Queued.';
                     Dashboard.hideLoadingMsg();
                 }).catch(function (err) {
                     var detail = (err && (err.message || err.statusText)) || 'unknown error';

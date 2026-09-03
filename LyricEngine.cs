@@ -184,7 +184,7 @@ public class LyricEngine
             hit.SyncedLyrics,
             cfg.EffectiveCensorMode,
             cfg.EffectiveCensorSymbolStyle,
-            cfg.EffectiveCensorWords);
+            cfg.CensorWords);
         var saved = await _lyrics.SaveLyricAsync(track, "lrc", lyrics).ConfigureAwait(false);
         if (saved is null)
         {
