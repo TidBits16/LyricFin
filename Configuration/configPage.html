@@ -5,7 +5,7 @@
     <title>LyricFin: Get Timed Lyrics</title>
 </head>
 <body>
-    <div id="LfConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-checkbox">
+    <div id="LfConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-checkbox,emby-select,emby-textarea">
         <div data-role="content">
             <div class="content-primary">
                 <form id="LfConfigForm">
@@ -31,6 +31,41 @@
                             <label class="inputLabel inputLabelUnfocused" for="IgnoreTitleMarkers">Ignore special characters / phrases</label>
                             <input is="emby-input" type="text" id="IgnoreTitleMarkers" />
                             <div class="fieldDescription">Comma-separated markers stripped from track titles before lookup (same as MusicFin), e.g. 🅴 or [Explicit].</div>
+                        </div>
+                    </div>
+
+                    <div class="verticalSection">
+                        <h3 class="checkboxListLabel">Censoring</h3>
+                        <div class="checkboxContainer checkboxContainer-withDescription">
+                            <label class="emby-checkbox-label">
+                                <input is="emby-checkbox" type="checkbox" id="CensorLyrics" />
+                                <span>Censor lyrics</span>
+                            </label>
+                            <div class="fieldDescription checkboxDescription">
+                                Mask swear words when lyrics are saved. Already-saved lyrics need Force refresh to re-censor.
+                            </div>
+                        </div>
+                        <div id="CensorOptions" style="display:none">
+                            <div class="selectContainer">
+                                <label class="selectLabel" for="CensorMode">Mode</label>
+                                <select is="emby-select" id="CensorMode">
+                                    <option value="Ending">Ending — f***</option>
+                                    <option value="Full">Full — ****</option>
+                                </select>
+                            </div>
+                            <div class="selectContainer" id="CensorSymbolStyleRow">
+                                <label class="selectLabel" for="CensorSymbolStyle">Symbols</label>
+                                <select is="emby-select" id="CensorSymbolStyle">
+                                    <option value="Asterisks">Asterisks — f***</option>
+                                    <option value="Dashes">Dashes — f---</option>
+                                    <option value="Random">Random — f&amp;!$</option>
+                                </select>
+                            </div>
+                            <div class="inputContainer" id="CensorWordsRow">
+                                <label class="textareaLabel" for="CensorWords">Word list</label>
+                                <textarea is="emby-textarea" id="CensorWords" rows="14" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;line-height:1.4"></textarea>
+                                <div class="fieldDescription">One word per line. Clear the box and Save to restore the built-in list.</div>
+                            </div>
                         </div>
                     </div>
 
@@ -61,6 +96,19 @@
         <script>
             const LfConfig = { pluginUniqueId: '59dd884e-2511-4dbf-8f89-761c3e2e0dee' };
 
+            function syncCensorUi() {
+                var on = document.querySelector('#CensorLyrics').checked;
+                document.querySelector('#CensorOptions').style.display = on ? '' : 'none';
+            }
+
+            function normalizeWordList(raw) {
+                return (raw || '')
+                    .split(/[\n\r,;]+/)
+                    .map(function (w) { return w.trim(); })
+                    .filter(Boolean)
+                    .join('\n');
+            }
+
             function applyConfig(config) {
                 document.querySelector('#Workers').value =
                     typeof config.Workers === 'number' ? config.Workers : 1;
@@ -68,6 +116,15 @@
                     config.SkipInstrumentals !== false;
                 document.querySelector('#IgnoreTitleMarkers').value =
                     config.IgnoreTitleMarkers ?? '🅴,[Explicit]';
+                var mode = config.CensorMode || 'None';
+                var enabled = mode !== 'None';
+                document.querySelector('#CensorLyrics').checked = enabled;
+                document.querySelector('#CensorMode').value =
+                    mode === 'Full' ? 'Full' : 'Ending';
+                document.querySelector('#CensorSymbolStyle').value = config.CensorSymbolStyle || 'Asterisks';
+                document.querySelector('#CensorWords').value = normalizeWordList(
+                    config.CensorWords || config.ExtraCensorWords || '');
+                syncCensorUi();
             }
 
             function saveConfig() {
@@ -75,6 +132,12 @@
                     config.Workers = parseInt(document.querySelector('#Workers').value, 10) || 0;
                     config.SkipInstrumentals = !!document.querySelector('#SkipInstrumentals').checked;
                     config.IgnoreTitleMarkers = document.querySelector('#IgnoreTitleMarkers').value;
+                    config.CensorMode = document.querySelector('#CensorLyrics').checked
+                        ? document.querySelector('#CensorMode').value
+                        : 'None';
+                    config.CensorSymbolStyle = document.querySelector('#CensorSymbolStyle').value;
+                    config.CensorWords = normalizeWordList(document.querySelector('#CensorWords').value);
+                    delete config.ExtraCensorWords;
                     return ApiClient.updatePluginConfiguration(LfConfig.pluginUniqueId, config);
                 });
             }
@@ -101,6 +164,8 @@
                     btn.disabled = false;
                 });
             }
+
+            document.querySelector('#CensorLyrics').addEventListener('change', syncCensorUi);
 
             document.querySelector('#FetchAllBtn').addEventListener('click', function (e) {
                 e.preventDefault();

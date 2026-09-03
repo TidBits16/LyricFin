@@ -107,7 +107,7 @@ public class LyricEngine
                     return;
                 }
 
-                var ok = await ProcessTrackAsync(track, cfg.EffectiveIgnoreTitleMarkers, cancellationToken)
+                var ok = await ProcessTrackAsync(track, cfg, cancellationToken)
                     .ConfigureAwait(false);
                 if (ok)
                 {
@@ -155,9 +155,10 @@ public class LyricEngine
 
     private async Task<bool> ProcessTrackAsync(
         Audio track,
-        IReadOnlyList<string> markers,
+        PluginConfiguration cfg,
         CancellationToken cancellationToken)
     {
+        var markers = cfg.EffectiveIgnoreTitleMarkers;
         var title = Titles.CleanForSearch(track.Name ?? string.Empty, markers);
         var artist = PrimaryArtist(track);
         if (title.Length == 0 || artist.Length == 0)
@@ -179,7 +180,12 @@ public class LyricEngine
             return false;
         }
 
-        var saved = await _lyrics.SaveLyricAsync(track, "lrc", hit.SyncedLyrics).ConfigureAwait(false);
+        var lyrics = LyricCensor.Apply(
+            hit.SyncedLyrics,
+            cfg.EffectiveCensorMode,
+            cfg.EffectiveCensorSymbolStyle,
+            cfg.EffectiveCensorWords);
+        var saved = await _lyrics.SaveLyricAsync(track, "lrc", lyrics).ConfigureAwait(false);
         if (saved is null)
         {
             _logger.LogWarning(
