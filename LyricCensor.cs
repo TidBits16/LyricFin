@@ -271,6 +271,13 @@ public static partial class LyricCensor
                 continue;
             }
 
+            // Short roots ("ass") only at the start — avoids glass/bass/pass.
+            // Longer roots ("fuck") may sit inside compounds (motherf***ing).
+            if (idx > 0 && root.Length < 4)
+            {
+                continue;
+            }
+
             var matched = token.Substring(idx, root.Length);
             var masked = MaskWhole(matched, CensorMode.Ending, style);
             return token[..idx] + masked + token[(idx + root.Length)..];

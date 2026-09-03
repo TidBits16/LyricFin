@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.0.0",
+  "version": "1.2.1.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Root censor mode (f***er), Words/Roots word list, and clearer force-button warnings.",
+  "changelog": "Avoid short-root false positives (e.g. ass inside glass).",
   "imagePath": "backdrop.svg"
 }

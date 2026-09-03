@@ -1,6 +1,6 @@
 name: "LyricFin: Get Timed Lyrics"
 guid: "59dd884e-2511-4dbf-8f89-761c3e2e0dee"
-version: "1.2.0.0"
+version: "1.2.1.0"
 targetAbi: "10.11.0.0"
 framework: "net9.0"
 overview: "Timed LRC lyrics via LRCLIB"
@@ -11,4 +11,4 @@ artifacts:
   - "Jellyfin.Plugin.LyricFin.dll"
   - "backdrop.svg"
 changelog: >
-  Root censor mode (f***er), Words/Roots word list, and clearer force-button warnings.
+  Avoid short-root false positives (e.g. ass inside glass).
