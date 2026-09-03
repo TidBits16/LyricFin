@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
     "versions": [
       {
+        "version": "1.1.0.0",
+        "changelog": "Optional swear-word censoring, and weekly Sunday 2:00 AM default schedule.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.1.0.0/lyricfin_1.1.0.0.zip",
+        "checksum": "c1ee2e8a1e9c2e0d75024695db561dce",
+        "timestamp": "2026-09-03T01:39:09Z"
+      },
+      {
         "version": "1.0.8.0",
         "changelog": "Use a single scheduled task; force-fetch from settings queues that same task.",
         "targetAbi": "10.11.0.0",
