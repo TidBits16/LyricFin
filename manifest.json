@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
     "versions": [
       {
+        "version": "1.2.1.0",
+        "changelog": "Avoid short-root false positives (e.g. ass inside glass).",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.1.0/lyricfin_1.2.1.0.zip",
+        "checksum": "27c9b544e3563f813172ee6593d435ff",
+        "timestamp": "2026-09-03T02:12:53Z"
+      },
+      {
         "version": "1.2.0.0",
         "changelog": "Root censor mode (f***er), Words/Roots word list, and clearer force-button warnings.",
         "targetAbi": "10.11.0.0",
