@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
     "versions": [
       {
+        "version": "1.2.2.0",
+        "changelog": "Blacklist/whitelist word lists with Root stems; short stems only match at word start; clearer whitelist help.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.2.0/lyricfin_1.2.2.0.zip",
+        "checksum": "36907a628c7b8deb29080bebece69970",
+        "timestamp": "2026-09-07T17:45:17Z"
+      },
+      {
         "version": "1.2.1.0",
         "changelog": "Avoid short-root false positives (e.g. ass inside glass).",
         "targetAbi": "10.11.0.0",
