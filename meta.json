@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.1.0",
+  "version": "1.2.2.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Avoid short-root false positives (e.g. ass inside glass).",
+  "changelog": "Blacklist/whitelist word lists with Root stems; short stems only match at word start; clearer whitelist help.",
   "imagePath": "backdrop.svg"
 }

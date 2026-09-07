@@ -11,6 +11,6 @@ public enum CensorMode
     /// <summary>Mask the whole word (****** for fucker).</summary>
     Full = 2,
 
-    /// <summary>Mask the root inside a word, keep the ending (F***er).</summary>
+    /// <summary>Mask a blacklist stem inside a word (F***er / motherF***ing).</summary>
     Root = 3,
 }

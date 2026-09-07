@@ -62,10 +62,13 @@
                                 </select>
                             </div>
                             <details class="verticalSection" id="CensorWordsRow" style="margin-top:1em">
-                                <summary class="checkboxListLabel" style="cursor:pointer">Word list</summary>
+                                <summary class="checkboxListLabel" style="cursor:pointer">Word lists</summary>
                                 <div class="inputContainer" style="margin-top:1em">
                                     <textarea is="emby-textarea" id="CensorWords" rows="14" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;line-height:1.4"></textarea>
-                                    <div class="fieldDescription">One word per line under # Words or # Roots (Clear and press Save to restore).</div>
+                                    <div class="fieldDescription">
+                                        One word per line under # Blacklist or # Whitelist (Clear and press Save to restore).<br>
+                                        Root mode treats blacklist entries as stems inside words. Short stems (under 4 letters, e.g. ass) only match at the <strong>start</strong> of a word — so asshole matches, glass does not. Longer stems (fuck) can match in the middle (motherf***ing). Put false positives like cocked on the whitelist.
+                                    </div>
                                 </div>
                             </details>
                         </div>
