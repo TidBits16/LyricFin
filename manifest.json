@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
     "versions": [
       {
+        "version": "1.2.3.0",
+        "changelog": "More resilient LRCLIB matching: album-less search, duration-less get, strip trailing artist, retry 503s.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.3.0/lyricfin_1.2.3.0.zip",
+        "checksum": "a02e775af7b558e696d5d718bce1bc47",
+        "timestamp": "2026-09-12T19:29:03Z"
+      },
+      {
         "version": "1.2.2.0",
         "changelog": "Blacklist/whitelist word lists with Root stems; short stems only match at word start; clearer whitelist help.",
         "targetAbi": "10.11.0.0",
