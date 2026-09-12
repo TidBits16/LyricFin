@@ -60,7 +60,8 @@ public sealed class PacedHttp
             using var response = await _http.GetAsync(url, cancellationToken).ConfigureAwait(false);
             Interlocked.Increment(ref _httpN);
 
-            if (response.StatusCode == HttpStatusCode.TooManyRequests)
+            if (response.StatusCode == HttpStatusCode.TooManyRequests
+                || response.StatusCode == HttpStatusCode.ServiceUnavailable)
             {
                 var retry = response.Headers.RetryAfter?.Delta ?? TimeSpan.FromSeconds(2 * (attempt + 1));
                 await Task.Delay(retry, cancellationToken).ConfigureAwait(false);

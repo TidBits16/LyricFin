@@ -17,6 +17,41 @@ public static partial class Titles
     public static string CleanForSearch(string value, IReadOnlyList<string>? markers = null)
         => StripMark(value ?? string.Empty, markers);
 
+    /// <summary>
+    /// Strips a trailing " - Artist" when the suffix matches <paramref name="artist"/>.
+    /// </summary>
+    public static string StripTrailingArtist(string title, string artist)
+    {
+        var t = title.Trim();
+        var a = artist.Trim();
+        if (t.Length == 0 || a.Length == 0)
+        {
+            return t;
+        }
+
+        foreach (var sep in new[] { " - ", " – ", " -- " })
+        {
+            var idx = t.LastIndexOf(sep, StringComparison.Ordinal);
+            if (idx <= 0)
+            {
+                continue;
+            }
+
+            var suffix = t[(idx + sep.Length)..].Trim();
+            if (suffix.Length == 0)
+            {
+                continue;
+            }
+
+            if (suffix.Equals(a, StringComparison.OrdinalIgnoreCase))
+            {
+                return t[..idx].TrimEnd();
+            }
+        }
+
+        return t;
+    }
+
     public static string StripMark(string name, IReadOnlyList<string>? markers = null)
     {
         var s = name.Trim();

@@ -67,9 +67,46 @@ public sealed class LrcLibClient
             }
         }
 
-        // 3) Search - pick the best result that has synced lyrics (prefer close duration).
-        return await SearchBestSyncedAsync(title, artist, album, durationSeconds, cancellationToken)
+        // 3) Exact without duration - LRCLIB get is strict on duration (± a few seconds).
+        if (durationSeconds is > 0)
+        {
+            exact = await GetExactAsync(title, artist, album, durationSeconds: null, cancellationToken)
+                .ConfigureAwait(false);
+            if (exact is not null)
+            {
+                return exact;
+            }
+
+            if (album.Length > 0)
+            {
+                exact = await GetExactAsync(title, artist, string.Empty, durationSeconds: null, cancellationToken)
+                    .ConfigureAwait(false);
+                if (exact is not null)
+                {
+                    return exact;
+                }
+            }
+        }
+
+        // 4) Search - with album, then without (wrong/missing album tags are common).
+        var search = await SearchBestSyncedAsync(title, artist, album, durationSeconds, cancellationToken)
             .ConfigureAwait(false);
+        if (search is not null)
+        {
+            return search;
+        }
+
+        if (album.Length > 0)
+        {
+            search = await SearchBestSyncedAsync(title, artist, string.Empty, durationSeconds, cancellationToken)
+                .ConfigureAwait(false);
+            if (search is not null)
+            {
+                return search;
+            }
+        }
+
+        return null;
     }
 
     private async Task<LrcHit?> GetExactAsync(
@@ -152,6 +189,7 @@ public sealed class LrcLibClient
         }
 
         LrcHit? best = null;
+        var bestScore = double.MinValue;
         var bestDelta = double.MaxValue;
         foreach (var item in payload.Value.EnumerateArray())
         {
@@ -161,27 +199,36 @@ public sealed class LrcLibClient
                 continue;
             }
 
+            var gotTitle = JsonUtil.Str(item, "trackName").Trim();
+            var gotArtist = JsonUtil.Str(item, "artistName").Trim();
+            var titleExact = gotTitle.Equals(title, StringComparison.OrdinalIgnoreCase);
+            var artistExact = gotArtist.Equals(artist, StringComparison.OrdinalIgnoreCase);
+
             var dur = JsonUtil.Num(item, "duration");
             var delta = durationSeconds is > 0 && dur > 0
                 ? Math.Abs(dur - durationSeconds.Value)
-                : 999;
-            // Prefer closer duration; accept anything with synced lyrics if duration unknown.
-            if (delta < bestDelta)
+                : 0;
+
+            // Prefer exact title+artist, then closer duration.
+            var score = (titleExact ? 1000 : 0) + (artistExact ? 100 : 0) - delta;
+            if (score > bestScore || (Math.Abs(score - bestScore) < 0.001 && delta < bestDelta))
             {
+                bestScore = score;
                 bestDelta = delta;
                 best = new LrcHit { SyncedLyrics = synced, Source = "lrclib-search" };
             }
         }
 
-        // If we have a local duration, require a reasonably close match (±8s) when possible.
-        if (best is not null && durationSeconds is > 0 && bestDelta < double.MaxValue && bestDelta > 8)
+        if (best is null)
         {
-            // Still return it - better than nothing for force/missing fills - but prefer tighter when available.
-            // Only reject extreme mismatches.
-            if (bestDelta > 30)
-            {
-                return null;
-            }
+            return null;
+        }
+
+        // Hard-reject only extreme duration mismatches when the title did not match exactly.
+        // Exact title hits (common for stylized names like P3T) are kept even if duration drifts.
+        if (durationSeconds is > 0 && bestDelta > 30 && bestScore < 1000)
+        {
+            return null;
         }
 
         return best;

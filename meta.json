@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.2.0",
+  "version": "1.2.3.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Blacklist/whitelist word lists with Root stems; short stems only match at word start; clearer whitelist help.",
+  "changelog": "More resilient LRCLIB matching: album-less search, duration-less get, strip trailing artist, retry 503s.",
   "imagePath": "backdrop.svg"
 }

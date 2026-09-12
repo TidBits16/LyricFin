@@ -159,7 +159,9 @@ public class LyricEngine
         CancellationToken cancellationToken)
     {
         var markers = cfg.EffectiveIgnoreTitleMarkers;
-        var title = Titles.CleanForSearch(track.Name ?? string.Empty, markers);
+        var title = Titles.StripTrailingArtist(
+            Titles.CleanForSearch(track.Name ?? string.Empty, markers),
+            PrimaryArtist(track));
         var artist = PrimaryArtist(track);
         if (title.Length == 0 || artist.Length == 0)
         {
