@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
     "versions": [
       {
+        "version": "1.2.5.0",
+        "changelog": "Keep - prefix on scheduled task only (plugin catalog name unchanged).",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.5.0/lyricfin_1.2.5.0.zip",
+        "checksum": "2d22e65a20e559100923dc198c5ca97a",
+        "timestamp": "2026-09-14T15:42:34Z"
+      },
+      {
         "version": "1.2.4.0",
         "changelog": "Sort plugin/task name to the bottom with a - prefix.",
         "targetAbi": "10.11.0.0",
