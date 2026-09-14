@@ -14,7 +14,7 @@ public class LyricLibraryTask : IScheduledTask
         _logger = logger;
     }
 
-    public string Name => "LyricFin: Get Timed Lyrics";
+    public string Name => "- LyricFin: Get Timed Lyrics";
 
     public string Key => "LyricFinLibrary";
 

@@ -1,13 +1,13 @@
 {
   "guid": "59dd884e-2511-4dbf-8f89-761c3e2e0dee",
-  "name": "LyricFin: Get Timed Lyrics",
+  "name": "- LyricFin: Get Timed Lyrics",
   "description": "Fetches timed LRC lyrics from LRCLIB for your music library.",
   "overview": "Timed LRC lyrics via LRCLIB.",
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.3.0",
+  "version": "1.2.4.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "More resilient LRCLIB matching: album-less search, duration-less get, strip trailing artist, retry 503s.",
+  "changelog": "Sort plugin/task name to the bottom with a - prefix.",
   "imagePath": "backdrop.svg"
 }
