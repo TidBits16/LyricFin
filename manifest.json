@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
     "versions": [
       {
+        "version": "1.2.8.0",
+        "changelog": "Move FinFamily tagline below title on backdrop.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.8.0/lyricfin_1.2.8.0.zip",
+        "checksum": "93ab5bcd067a0c59bb84fc89e48b01d1",
+        "timestamp": "2026-09-14T16:22:53Z"
+      },
+      {
         "version": "1.2.7.0",
         "changelog": "Add FinFamily tagline under logo on backdrop.",
         "targetAbi": "10.11.0.0",
