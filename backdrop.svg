@@ -34,8 +34,8 @@
     <rect fill="#04a5e5" x="32.5" y="33" width="5" height="1" rx="0.5"/>
     <rect fill="#04a5e5" x="32.5" y="35" width="3.5" height="1" rx="0.5"/>
       </g>
-      <text class="tagline" x="0" y="408.00" dominant-baseline="hanging">A part of the FinFamily of plugins</text>
-      <text class="title" x="0" y="469.00" dominant-baseline="hanging">LyricFin</text>
+      <text class="title" x="0" y="408.00" dominant-baseline="hanging">LyricFin</text>
+      <text class="tagline" x="0" y="627.00" dominant-baseline="hanging">A part of the FinFamily of plugins</text>
     </g>
   </g>
 </svg>
