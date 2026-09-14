@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
     "versions": [
       {
+        "version": "1.2.10.0",
+        "changelog": "Solid primary backdrop; horizontal logo+title lockup; italic FinFamily tagline.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.10.0/lyricfin_1.2.10.0.zip",
+        "checksum": "acbca0e2e9239e76968789dfcc4be868",
+        "timestamp": "2026-09-14T16:30:39Z"
+      },
+      {
         "version": "1.2.9.0",
         "changelog": "Horizontal logo+title lockup; full-opacity FinFamily tagline under title.",
         "targetAbi": "10.11.0.0",
