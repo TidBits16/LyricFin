@@ -19,7 +19,7 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
 
     public static Plugin? Instance { get; private set; }
 
-    public override string Name => "- LyricFin: Get Timed Lyrics";
+    public override string Name => "LyricFin: Get Timed Lyrics";
 
     public override string Description =>
         "Fetches timed LRC lyrics (prefers synced) from LRCLIB for your music library.";
