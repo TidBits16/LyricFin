@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
     "versions": [
       {
+        "version": "1.2.11.0",
+        "changelog": "Whole-word blacklist censoring only (split on spaces/hyphens \u2014 ass does not match glass). Dropped stem/Root matching and the whitelist; add missed words in settings. Defaults include damn/dammit.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.11.0/LyricFin_1.2.11.0.zip",
+        "checksum": "58b1b522ca2a0bab0d55f63b6add3510",
+        "timestamp": "2026-09-15T13:22:07Z"
+      },
+      {
         "version": "1.2.10.0",
         "changelog": "Solid primary backdrop; horizontal logo+title lockup; italic FinFamily tagline.",
         "targetAbi": "10.11.0.0",

@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.10.0",
+  "version": "1.2.11.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Solid primary backdrop; horizontal logo+title lockup; italic FinFamily tagline.",
+  "changelog": "Whole-word blacklist censoring only (split on spaces/hyphens — ass does not match glass). Dropped stem/Root matching and the whitelist; add missed words in settings. Defaults include damn/dammit.",
   "imagePath": "backdrop.svg"
 }

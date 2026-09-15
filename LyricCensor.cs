@@ -4,10 +4,14 @@ using Jellyfin.Plugin.LyricFin.Configuration;
 
 namespace Jellyfin.Plugin.LyricFin;
 
-/// <summary>Masks swear words in LRC payloads while leaving timestamps and tags intact.</summary>
+/// <summary>
+/// Masks swear words in LRC payloads while leaving timestamps and tags intact.
+/// Matching is whole-word only: tokens are split on spaces and hyphens, so
+/// <c>ass</c> does not match <c>glass</c>; compounds like <c>asshole</c> must be listed.
+/// </summary>
 public static partial class LyricCensor
 {
-    /// <summary>Exact whole words (First-Letter/Full) and stems (Root).</summary>
+    /// <summary>Default whole words to censor. Add compounds explicitly (asshole, motherfucker, …).</summary>
     public static readonly IReadOnlyList<string> DefaultBlacklist =
     [
         "ass",
@@ -29,6 +33,8 @@ public static partial class LyricCensor
         "cocksuckers",
         "cunt",
         "cunts",
+        "damn",
+        "dammit",
         "dick",
         "dickhead",
         "dickheads",
@@ -59,59 +65,15 @@ public static partial class LyricCensor
         "wankers",
     ];
 
-    /// <summary>Exact whole words that should never be censored.</summary>
-    public static readonly IReadOnlyList<string> DefaultWhitelist =
-    [
-        "assassin",
-        "assemble",
-        "assembly",
-        "assess",
-        "assessment",
-        "asset",
-        "assets",
-        "assign",
-        "assist",
-        "associate",
-        "association",
-        "assume",
-        "assumed",
-        "assumes",
-        "assuming",
-        "assurance",
-        "bass",
-        "class",
-        "classic",
-        "classical",
-        "cocked",
-        "cocktail",
-        "cocktails",
-        "compass",
-        "dickens",
-        "glass",
-        "glasses",
-        "hitchcock",
-        "massachusetts",
-        "pass",
-        "passage",
-        "passenger",
-        "peacock",
-        "shiitake",
-    ];
-
     public static string DefaultWordListText
     {
         get
         {
             var sb = new StringBuilder();
             sb.AppendLine("# Blacklist");
+            sb.AppendLine("# One word per line. Matching is whole-word only (split on spaces and hyphens).");
+            sb.AppendLine("# Add compounds yourself (e.g. asshole) — short words like ass will not match inside glass.");
             foreach (var w in DefaultBlacklist)
-            {
-                sb.AppendLine(w);
-            }
-
-            sb.AppendLine();
-            sb.AppendLine("# Whitelist");
-            foreach (var w in DefaultWhitelist)
             {
                 sb.AppendLine(w);
             }
@@ -125,12 +87,11 @@ public static partial class LyricCensor
     [GeneratedRegex(@"^(?:\[[^\]]*\])+", RegexOptions.CultureInvariant)]
     private static partial Regex LrcTagPrefix();
 
-    [GeneratedRegex(@"[\p{L}\p{N}']+", RegexOptions.CultureInvariant)]
-    private static partial Regex LyricToken();
+    /// <summary>Letter/number/' runs (words) or everything else (spaces, hyphens, punctuation).</summary>
+    [GeneratedRegex(@"[\p{L}\p{N}']+|[^\p{L}\p{N}']+", RegexOptions.CultureInvariant)]
+    private static partial Regex LyricChunks();
 
-    public readonly record struct CensorLists(
-        IReadOnlyList<string> Blacklist,
-        IReadOnlySet<string> Whitelist);
+    public readonly record struct CensorLists(IReadOnlySet<string> Blacklist);
 
     public static string Apply(
         string lrc,
@@ -141,6 +102,12 @@ public static partial class LyricCensor
         if (mode == CensorMode.None || string.IsNullOrEmpty(lrc))
         {
             return lrc;
+        }
+
+        // Legacy Root mode behaves like First-Letter (whole-word mask, keep first letter).
+        if (mode == CensorMode.Root)
+        {
+            mode = CensorMode.Ending;
         }
 
         var lists = ParseLists(wordListText);
@@ -169,13 +136,12 @@ public static partial class LyricCensor
     {
         if (string.IsNullOrWhiteSpace(raw))
         {
-            return new CensorLists(DefaultBlacklist, ToSet(DefaultWhitelist));
+            return new CensorLists(ToSet(DefaultBlacklist));
         }
 
         var blacklist = new List<string>();
-        var whitelist = new List<string>();
-        var section = "blacklist";
-        var sawHeader = false;
+        var inWhitelist = false;
+        var sawAnyWord = false;
 
         foreach (var rawLine in SplitLines(raw))
         {
@@ -188,33 +154,13 @@ public static partial class LyricCensor
             if (line.StartsWith('#'))
             {
                 var header = line.TrimStart('#').Trim();
-                if (IsBlacklistHeader(header))
-                {
-                    section = "blacklist";
-                    sawHeader = true;
-                    continue;
-                }
+                // Ignore whitelist / legacy section headers; only blacklist words are used.
+                inWhitelist = IsWhitelistHeader(header);
+                continue;
+            }
 
-                if (IsWhitelistHeader(header))
-                {
-                    section = "whitelist";
-                    sawHeader = true;
-                    continue;
-                }
-
-                // Legacy section names fold into blacklist.
-                if (header.Equals("roots", StringComparison.OrdinalIgnoreCase)
-                    || header.Equals("root", StringComparison.OrdinalIgnoreCase)
-                    || header.Equals("stems", StringComparison.OrdinalIgnoreCase)
-                    || header.Equals("words", StringComparison.OrdinalIgnoreCase)
-                    || header.Equals("word", StringComparison.OrdinalIgnoreCase)
-                    || header.Equals("exact", StringComparison.OrdinalIgnoreCase))
-                {
-                    section = "blacklist";
-                    sawHeader = true;
-                    continue;
-                }
-
+            if (inWhitelist)
+            {
                 continue;
             }
 
@@ -225,34 +171,13 @@ public static partial class LyricCensor
                     continue;
                 }
 
-                if (section == "whitelist")
-                {
-                    whitelist.Add(part);
-                }
-                else
-                {
-                    blacklist.Add(part);
-                }
+                sawAnyWord = true;
+                blacklist.Add(part);
             }
         }
 
-        if (!sawHeader)
-        {
-            return new CensorLists(
-                DistinctList(blacklist.Count > 0 ? blacklist : DefaultBlacklist),
-                ToSet(DefaultWhitelist));
-        }
-
-        return new CensorLists(
-            DistinctList(blacklist.Count > 0 ? blacklist : DefaultBlacklist),
-            ToSet(whitelist.Count > 0 ? whitelist : DefaultWhitelist));
+        return new CensorLists(ToSet(sawAnyWord ? blacklist : DefaultBlacklist));
     }
-
-    private static bool IsBlacklistHeader(string header)
-        => header.Equals("blacklist", StringComparison.OrdinalIgnoreCase)
-           || header.Equals("black", StringComparison.OrdinalIgnoreCase)
-           || header.Equals("block", StringComparison.OrdinalIgnoreCase)
-           || header.Equals("blocklist", StringComparison.OrdinalIgnoreCase);
 
     private static bool IsWhitelistHeader(string header)
         => header.Equals("whitelist", StringComparison.OrdinalIgnoreCase)
@@ -275,80 +200,40 @@ public static partial class LyricCensor
             return line;
         }
 
-        if (mode == CensorMode.Root)
+        var sb = new StringBuilder(text.Length);
+        foreach (Match chunk in LyricChunks().Matches(text))
         {
-            return tags + CensorRootsInText(text, lists.Blacklist, lists.Whitelist, style);
-        }
-
-        var alternation = string.Join(
-            '|',
-            lists.Blacklist.OrderByDescending(w => w.Length).Select(Regex.Escape));
-        var wordRegex = new Regex(
-            $@"(?<![\p{{L}}\p{{N}}'])({alternation})(?![\p{{L}}\p{{N}}'])",
-            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-
-        return tags + wordRegex.Replace(text, m =>
-        {
-            if (lists.Whitelist.Contains(m.Value))
+            var value = chunk.Value;
+            // Hyphen and space (and other non-word runs) are separators — never censor them.
+            if (!IsWordToken(value))
             {
-                return m.Value;
-            }
-
-            return MaskWhole(m.Value, mode, style);
-        });
-    }
-
-    private static string CensorRootsInText(
-        string text,
-        IReadOnlyList<string> stems,
-        IReadOnlySet<string> whitelist,
-        CensorSymbolStyle style)
-    {
-        var ordered = stems
-            .Where(r => r.Length > 0)
-            .OrderByDescending(r => r.Length)
-            .ToArray();
-        if (ordered.Length == 0)
-        {
-            return text;
-        }
-
-        return LyricToken().Replace(text, m => MaskTokenWithRoot(m.Value, ordered, whitelist, style));
-    }
-
-    private static string MaskTokenWithRoot(
-        string token,
-        IReadOnlyList<string> stemsLongestFirst,
-        IReadOnlySet<string> whitelist,
-        CensorSymbolStyle style)
-    {
-        if (whitelist.Contains(token))
-        {
-            return token;
-        }
-
-        var lower = token.ToLowerInvariant();
-        foreach (var stem in stemsLongestFirst)
-        {
-            var idx = lower.IndexOf(stem, StringComparison.Ordinal);
-            if (idx < 0)
-            {
+                sb.Append(value);
                 continue;
             }
 
-            // Short stems ("ass") only at the start — avoids glass/bass/pass.
-            // Longer stems ("fuck") may sit inside compounds (motherf***ing).
-            if (idx > 0 && stem.Length < 4)
+            if (lists.Blacklist.Contains(value))
             {
-                continue;
+                sb.Append(MaskWhole(value, mode, style));
             }
-
-            var matched = token.Substring(idx, stem.Length);
-            var masked = MaskWhole(matched, CensorMode.Ending, style);
-            return token[..idx] + masked + token[(idx + stem.Length)..];
+            else
+            {
+                sb.Append(value);
+            }
         }
 
-        return token;
+        return tags + sb;
+    }
+
+    private static bool IsWordToken(string value)
+    {
+        if (value.Length == 0)
+        {
+            return false;
+        }
+
+        // Word tokens are letter/digit/' runs from LyricChunks; hyphens are separate chunks.
+        var c = value[0];
+        return char.IsLetter(c) || char.IsDigit(c) || c == '\'';
     }
 
     private static string MaskWhole(string word, CensorMode mode, CensorSymbolStyle style)
@@ -363,7 +248,7 @@ public static partial class LyricCensor
             return word;
         }
 
-        var start = mode is CensorMode.Ending or CensorMode.Root ? 1 : 0;
+        var start = mode == CensorMode.Ending ? 1 : 0;
         var chars = new char[word.Length];
         char? previous = null;
         for (var i = 0; i < word.Length; i++)

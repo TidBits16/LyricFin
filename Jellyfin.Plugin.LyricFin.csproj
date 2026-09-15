@@ -5,9 +5,9 @@
     <AssemblyName>Jellyfin.Plugin.LyricFin</AssemblyName>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Version>1.2.10.0</Version>
-    <FileVersion>1.2.10.0</FileVersion>
-    <AssemblyVersion>1.2.10.0</AssemblyVersion>
+    <Version>1.2.11.0</Version>
+    <FileVersion>1.2.11.0</FileVersion>
+    <AssemblyVersion>1.2.11.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
@@ -23,5 +23,9 @@
   <ItemGroup>
     <None Remove="Configuration\configPage.html" />
     <EmbeddedResource Include="Configuration\configPage.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Jellyfin.Plugin.LyricFin.Tests/**" />
+    <None Remove="Jellyfin.Plugin.LyricFin.Tests/**" />
   </ItemGroup>
 </Project>

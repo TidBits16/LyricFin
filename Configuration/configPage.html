@@ -48,7 +48,6 @@
                             <div class="selectContainer">
                                 <label class="selectLabel" for="CensorMode">Mode</label>
                                 <select is="emby-select" id="CensorMode">
-                                    <option value="Root">Root — F***er</option>
                                     <option value="Ending">First-Letter — F*****</option>
                                     <option value="Full">Full — ******</option>
                                 </select>
@@ -56,18 +55,17 @@
                             <div class="selectContainer" id="CensorSymbolStyleRow">
                                 <label class="selectLabel" for="CensorSymbolStyle">Symbols</label>
                                 <select is="emby-select" id="CensorSymbolStyle">
-                                    <option value="Asterisks">Asterisks — F***er</option>
-                                    <option value="Dashes">Dashes — F---er</option>
-                                    <option value="Random">Random — F&amp;!$er</option>
+                                    <option value="Asterisks">Asterisks — F*****</option>
+                                    <option value="Dashes">Dashes — F-----</option>
+                                    <option value="Random">Random — F&amp;!$@%</option>
                                 </select>
                             </div>
                             <details class="verticalSection" id="CensorWordsRow" style="margin-top:1em">
-                                <summary class="checkboxListLabel" style="cursor:pointer">Word lists</summary>
+                                <summary class="checkboxListLabel" style="cursor:pointer">Blacklist</summary>
                                 <div class="inputContainer" style="margin-top:1em">
                                     <textarea is="emby-textarea" id="CensorWords" rows="14" style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;line-height:1.4"></textarea>
                                     <div class="fieldDescription">
-                                        One word per line under # Blacklist or # Whitelist (Clear and press Save to restore).<br>
-                                        Root mode treats blacklist entries as stems inside words. Short stems (under 4 letters, e.g. ass) only match at the <strong>start</strong> of a word — so asshole matches, glass does not. Longer stems (fuck) can match in the middle (motherf***ing). Put false positives like cocked on the whitelist.
+                                        One word per line. Matching is <strong>whole-word only</strong> — words are split on spaces and hyphens, so <code>ass</code> will not match inside <code>glass</code>. Add compounds yourself (e.g. <code>asshole</code>) if a word is missed. Clear and Save to restore the default list.
                                     </div>
                                 </div>
                             </details>
@@ -128,13 +126,9 @@
                 var mode = config.CensorMode || 'None';
                 var enabled = mode !== 'None';
                 document.querySelector('#CensorLyrics').checked = enabled;
-                var selectMode = 'Root';
+                var selectMode = 'Ending';
                 if (mode === 'Full') {
                     selectMode = 'Full';
-                } else if (mode === 'Ending' || mode === 'FirstLetter') {
-                    selectMode = 'Ending';
-                } else if (mode === 'Root') {
-                    selectMode = 'Root';
                 }
                 document.querySelector('#CensorMode').value = selectMode;
                 document.querySelector('#CensorSymbolStyle').value = config.CensorSymbolStyle || 'Asterisks';
