@@ -13,10 +13,6 @@ public static partial class Titles
     public static bool IsInstrumental(string? title)
         => !string.IsNullOrWhiteSpace(title) && InstrumentalMark().IsMatch(title);
 
-    /// <summary>Strip configured markers (same behavior as MusicFin) before lyric lookup.</summary>
-    public static string CleanForSearch(string value, IReadOnlyList<string>? markers = null)
-        => StripMark(value ?? string.Empty, markers);
-
     /// <summary>
     /// Strips a trailing " - Artist" when the suffix matches <paramref name="artist"/>.
     /// </summary>
@@ -38,11 +34,6 @@ public static partial class Titles
             }
 
             var suffix = t[(idx + sep.Length)..].Trim();
-            if (suffix.Length == 0)
-            {
-                continue;
-            }
-
             if (suffix.Equals(a, StringComparison.OrdinalIgnoreCase))
             {
                 return t[..idx].TrimEnd();
@@ -72,24 +63,16 @@ public static partial class Titles
         }
 
         var s = name;
-        foreach (var edge in new[] { mark, mark + " ", " " + mark })
+        if (s.StartsWith(mark, StringComparison.Ordinal))
         {
-            if (s.StartsWith(edge, StringComparison.Ordinal))
-            {
-                s = s[edge.Length..].TrimStart();
-                break;
-            }
+            s = s[mark.Length..];
         }
 
-        foreach (var edge in new[] { mark, " " + mark, mark + " " })
+        if (s.EndsWith(mark, StringComparison.Ordinal))
         {
-            if (s.EndsWith(edge, StringComparison.Ordinal))
-            {
-                s = s[..^edge.Length].TrimEnd();
-                break;
-            }
+            s = s[..^mark.Length];
         }
 
-        return s;
+        return s.Trim();
     }
 }

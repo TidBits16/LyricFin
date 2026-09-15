@@ -25,7 +25,10 @@ public sealed class LrcLibClient
             factory,
             cache,
             TimeSpan.FromMilliseconds(350),
-            "LyricFin/1.0.0 (https://github.com/TidBits16/LyricFin)");
+            userAgent: "LyricFin/1.0.0 (https://github.com/TidBits16/LyricFin)",
+            maxInFlight: 1,
+            retryOn429: true,
+            retryOn503: true);
         _logger = logger;
     }
 

@@ -160,7 +160,7 @@ public class LyricEngine
     {
         var markers = cfg.EffectiveIgnoreTitleMarkers;
         var title = Titles.StripTrailingArtist(
-            Titles.CleanForSearch(track.Name ?? string.Empty, markers),
+            Titles.StripMark(track.Name ?? string.Empty, markers),
             PrimaryArtist(track));
         var artist = PrimaryArtist(track);
         if (title.Length == 0 || artist.Length == 0)
@@ -168,7 +168,7 @@ public class LyricEngine
             return false;
         }
 
-        var album = Titles.CleanForSearch(track.Album ?? string.Empty, markers);
+        var album = Titles.StripMark(track.Album ?? string.Empty, markers);
         double? duration = null;
         if (track.RunTimeTicks is > 0)
         {
