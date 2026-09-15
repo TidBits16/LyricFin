@@ -1,6 +1,8 @@
 .mb_cache/
 .env
-/bin/
-/obj/
-/dist/
+bin/
+obj/
+dist/
+.vs/
 *.user
+*.suo
