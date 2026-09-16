@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.12.0",
+  "version": "1.2.13.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Shared FinCommon HTTP cache/client; simplify title marker stripping.",
+  "changelog": "HTTP caches last 30 days; force fetch clears LRCLIB cache; expired lookups re-fetch individually.",
   "imagePath": "backdrop.svg"
 }

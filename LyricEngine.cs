@@ -13,6 +13,7 @@ public class LyricEngine
     private readonly ILibraryManager _library;
     private readonly ILyricManager _lyrics;
     private readonly LrcLibClient _lrclib;
+    private readonly HttpCache _cache;
     private readonly ILogger<LyricEngine> _logger;
     private int _forceNext;
 
@@ -20,11 +21,13 @@ public class LyricEngine
         ILibraryManager library,
         ILyricManager lyrics,
         LrcLibClient lrclib,
+        HttpCache cache,
         ILogger<LyricEngine> logger)
     {
         _library = library;
         _lyrics = lyrics;
         _lrclib = lrclib;
+        _cache = cache;
         _logger = logger;
     }
 
@@ -37,12 +40,18 @@ public class LyricEngine
         return RunAsync(force, progress, cancellationToken);
     }
 
-    /// <param name="force">When true, refetch and overwrite even if lyrics already exist.</param>
+    /// <param name="force">When true, clear HTTP cache and refetch/overwrite even if lyrics already exist.</param>
     public async Task<LyricRunResult> RunAsync(
         bool force,
         IProgress<double> progress,
         CancellationToken cancellationToken)
     {
+        if (force)
+        {
+            _cache.Clear();
+            _logger.LogInformation("LyricFin: force fetch requested (HTTP cache cleared)");
+        }
+
         var cfg = Plugin.Instance?.Configuration ?? new PluginConfiguration();
         var workers = cfg.Workers <= 0 ? 1 : cfg.Workers;
         workers = Math.Clamp(workers, 1, 4);

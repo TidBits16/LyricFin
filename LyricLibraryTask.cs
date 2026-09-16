@@ -19,7 +19,7 @@ public class LyricLibraryTask : IScheduledTask
     public string Key => "LyricFinLibrary";
 
     public string Description =>
-        "Fetches missing timed LRC lyrics from LRCLIB. A force fetch from plugin settings uses this same task and overwrites existing lyrics.";
+        "Fetches missing timed LRC lyrics from LRCLIB. A force fetch from plugin settings clears the HTTP cache and overwrites existing lyrics.";
 
     public string Category => "Library";
 

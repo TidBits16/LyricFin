@@ -24,6 +24,7 @@ public sealed class LyricFinController : ControllerBase
 
     /// <summary>
     /// Queue a force-fetch of timed lyrics for every audio track (runs as the scheduled task so the UI request cannot time out).
+    /// Clears the LRCLIB HTTP cache first.
     /// </summary>
     [HttpPost("FetchAll")]
     [ProducesResponseType(StatusCodes.Status200OK)]

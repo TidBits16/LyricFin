@@ -14,7 +14,7 @@ public sealed class LrcHit
 public sealed class LrcLibClient
 {
     private const string Base = "https://lrclib.net";
-    private static readonly TimeSpan Ttl = TimeSpan.FromDays(14);
+    private static readonly TimeSpan Ttl = TimeSpan.FromDays(30);
 
     private readonly PacedHttp _http;
     private readonly ILogger<LrcLibClient> _logger;
