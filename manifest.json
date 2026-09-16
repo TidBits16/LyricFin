@@ -9,6 +9,14 @@
     "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
     "versions": [
       {
+        "version": "1.2.14.0",
+        "changelog": "Skip tracks with no lyrics until cache TTL; cache LRCLIB 404s.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.14.0/lyricfin_1.2.14.0.zip",
+        "checksum": "7608d177fe3ef0af5d891804cdcd78cd",
+        "timestamp": "2026-09-16T15:27:22Z"
+      },
+      {
         "version": "1.2.13.0",
         "changelog": "HTTP caches last 30 days; force fetch clears LRCLIB cache; expired lookups re-fetch individually.",
         "targetAbi": "10.11.0.0",

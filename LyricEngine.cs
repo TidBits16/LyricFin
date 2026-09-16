@@ -74,7 +74,9 @@ public class LyricEngine
         var clearTargets = force ? instrumentals : [];
         var fetchTargets = force
             ? nonInstrumentals
-            : nonInstrumentals.Where(t => t.HasLyrics != true).ToList();
+            : nonInstrumentals
+                .Where(t => t.HasLyrics != true && !LookupMiss.IsRemembered(_cache, TrackMissKey(t)))
+                .ToList();
 
         var skipped = tracks.Count - fetchTargets.Count - clearTargets.Count;
 
@@ -188,6 +190,7 @@ public class LyricEngine
             .ConfigureAwait(false);
         if (hit is null)
         {
+            LookupMiss.Remember(_cache, TrackMissKey(track));
             return false;
         }
 
@@ -231,6 +234,8 @@ public class LyricEngine
 
         return string.Empty;
     }
+
+    private static string TrackMissKey(Audio track) => "track/" + track.Id.ToString("N");
 }
 
 public readonly record struct LyricRunResult(int Saved, int Missed, int Skipped, int Cleared);
