@@ -74,4 +74,42 @@ public class LyricCensorTests
         var result = LyricCensor.Apply(lrc, CensorMode.Full, CensorSymbolStyle.Asterisks, "# Blacklist\nfuck\n# Whitelist\nfuck\n");
         Assert.Equal("[00:01.00]****", result);
     }
+
+    [Fact]
+    public void TrailingApostropheInForms_MatchIngListEntries()
+    {
+        // Older saved lists often have "fucking" / "motherfucking" but not the -in spellings.
+        var words = "fucking\nmotherfucking\nbitching\n";
+        var fuckin = LyricCensor.Apply("[00:01.00]fuckin' hell", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
+        Assert.Equal("[00:01.00]******* hell", fuckin);
+
+        var mf = LyricCensor.Apply("[00:01.00]motherfuckin' loud", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
+        Assert.DoesNotContain("motherfuckin", mf, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void TrailingApostropheInForms_AreCensored()
+    {
+        var words = "fuckin\nfucking\nmotherfuckin\nmotherfucking\nbitchin\nbitching\nshittin\nshitting\n";
+        var fuckin = LyricCensor.Apply("[00:01.00]fuckin' hell", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
+        Assert.Equal("[00:01.00]******* hell", fuckin);
+
+        var curly = LyricCensor.Apply("[00:01.00]motherfuckin’ yeah", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
+        Assert.DoesNotContain("motherfuckin", curly, StringComparison.OrdinalIgnoreCase);
+
+        var bitchin = LyricCensor.Apply("[00:01.00]bitchin'", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
+        Assert.Equal("[00:01.00]********", bitchin);
+    }
+
+    [Fact]
+    public void DefaultBlacklist_IncludesMotherfuckin()
+    {
+        Assert.Contains("motherfuckin", LyricCensor.DefaultBlacklist);
+        var result = LyricCensor.Apply(
+            "[00:01.00]motherfuckin' loud",
+            CensorMode.Full,
+            CensorSymbolStyle.Asterisks,
+            LyricCensor.DefaultWordListText);
+        Assert.DoesNotContain("motherfuckin", result, StringComparison.OrdinalIgnoreCase);
+    }
 }

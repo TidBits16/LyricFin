@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.14.0",
+  "version": "1.2.15.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Skip tracks with no lyrics until cache TTL; cache LRCLIB 404s.",
+  "changelog": "Censor fuckin'/motherfuckin' (trailing apostrophes); -in forms match -ing list entries; add motherfuckin/bitchin/shittin to defaults.",
   "imagePath": "backdrop.svg"
 }

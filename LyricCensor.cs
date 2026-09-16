@@ -24,6 +24,7 @@ public static partial class LyricCensor
         "bastards",
         "bitch",
         "bitches",
+        "bitchin",
         "bitchy",
         "bitching",
         "bullshit",
@@ -48,6 +49,7 @@ public static partial class LyricCensor
         "fucks",
         "motherfucker",
         "motherfuckers",
+        "motherfuckin",
         "motherfucking",
         "nigga",
         "niggas",
@@ -57,6 +59,7 @@ public static partial class LyricCensor
         "pussy",
         "shit",
         "shits",
+        "shittin",
         "shitting",
         "shitty",
         "twat",
@@ -72,6 +75,7 @@ public static partial class LyricCensor
             var sb = new StringBuilder();
             sb.AppendLine("# Blacklist");
             sb.AppendLine("# One word per line. Matching is whole-word only (split on spaces and hyphens).");
+            sb.AppendLine("# Trailing apostrophes are ignored for matching (fuckin' matches fuckin).");
             sb.AppendLine("# Add compounds yourself (e.g. asshole) — short words like ass will not match inside glass.");
             foreach (var w in DefaultBlacklist)
             {
@@ -211,7 +215,7 @@ public static partial class LyricCensor
                 continue;
             }
 
-            if (lists.Blacklist.Contains(value))
+            if (IsBlacklisted(value, lists.Blacklist))
             {
                 sb.Append(MaskWhole(value, mode, style));
             }
@@ -222,6 +226,46 @@ public static partial class LyricCensor
         }
 
         return tags + sb;
+    }
+
+    /// <summary>
+    /// Trailing apostrophes (fuckin' / motherfuckin') are part of the lyric token but
+    /// not of the blacklist entry — strip them for lookup only. Also try the -ing form
+    /// when the token ends in -in so older lists with "fucking" still catch "fuckin'".
+    /// </summary>
+    private static bool IsBlacklisted(string token, IReadOnlySet<string> blacklist)
+    {
+        if (blacklist.Contains(token))
+        {
+            return true;
+        }
+
+        var key = MatchKey(token);
+        if (key.Length == 0)
+        {
+            return false;
+        }
+
+        if (blacklist.Contains(key))
+        {
+            return true;
+        }
+
+        // fuckin / motherfuckin / bitchin → fucking / motherfucking / bitching
+        if (key.EndsWith("in", StringComparison.OrdinalIgnoreCase)
+            && !key.EndsWith("ing", StringComparison.OrdinalIgnoreCase)
+            && blacklist.Contains(key + "g"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static string MatchKey(string token)
+    {
+        // Straight + curly apostrophes / right single quotation marks.
+        return token.TrimEnd('\'', '\u2019', '\u2018');
     }
 
     private static bool IsWordToken(string value)
