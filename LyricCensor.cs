@@ -6,8 +6,9 @@ namespace Jellyfin.Plugin.LyricFin;
 
 /// <summary>
 /// Masks swear words in LRC payloads while leaving timestamps and tags intact.
-/// Matching is whole-word only: tokens are split on spaces and hyphens, so
+/// Matching is whole-word only: tokens are split on spaces, hyphens, and apostrophes, so
 /// <c>ass</c> does not match <c>glass</c>; compounds like <c>asshole</c> must be listed.
+/// Apostrophes separate too (<c>shit's</c> → <c>shit</c>, <c>fuckin'</c> → <c>fuckin</c>).
 /// </summary>
 public static partial class LyricCensor
 {
@@ -74,8 +75,8 @@ public static partial class LyricCensor
         {
             var sb = new StringBuilder();
             sb.AppendLine("# Blacklist");
-            sb.AppendLine("# One word per line. Matching is whole-word only (split on spaces and hyphens).");
-            sb.AppendLine("# Trailing apostrophes are ignored for matching (fuckin' matches fuckin).");
+            sb.AppendLine("# One word per line. Matching is whole-word only (split on spaces, hyphens, and apostrophes).");
+            sb.AppendLine("# So shit's → shit + ' + s, and fuckin' → fuckin.");
             sb.AppendLine("# Add compounds yourself (e.g. asshole) — short words like ass will not match inside glass.");
             foreach (var w in DefaultBlacklist)
             {
@@ -91,8 +92,8 @@ public static partial class LyricCensor
     [GeneratedRegex(@"^(?:\[[^\]]*\])+", RegexOptions.CultureInvariant)]
     private static partial Regex LrcTagPrefix();
 
-    /// <summary>Letter/number/' runs (words) or everything else (spaces, hyphens, punctuation).</summary>
-    [GeneratedRegex(@"[\p{L}\p{N}']+|[^\p{L}\p{N}']+", RegexOptions.CultureInvariant)]
+    /// <summary>Letter/number runs (words) or everything else (spaces, hyphens, apostrophes, punctuation).</summary>
+    [GeneratedRegex(@"[\p{L}\p{N}]+|[^\p{L}\p{N}]+", RegexOptions.CultureInvariant)]
     private static partial Regex LyricChunks();
 
     public readonly record struct CensorLists(IReadOnlySet<string> Blacklist);
@@ -229,9 +230,8 @@ public static partial class LyricCensor
     }
 
     /// <summary>
-    /// Trailing apostrophes (fuckin' / motherfuckin') are part of the lyric token but
-    /// not of the blacklist entry — strip them for lookup only. Also try the -ing form
-    /// when the token ends in -in so older lists with "fucking" still catch "fuckin'".
+    /// Apostrophes are word separators (shit's → shit). Also try the -ing form when the
+    /// token ends in -in so older lists with "fucking" still catch "fuckin".
     /// </summary>
     private static bool IsBlacklisted(string token, IReadOnlySet<string> blacklist)
     {
@@ -240,32 +240,15 @@ public static partial class LyricCensor
             return true;
         }
 
-        var key = MatchKey(token);
-        if (key.Length == 0)
-        {
-            return false;
-        }
-
-        if (blacklist.Contains(key))
-        {
-            return true;
-        }
-
         // fuckin / motherfuckin / bitchin → fucking / motherfucking / bitching
-        if (key.EndsWith("in", StringComparison.OrdinalIgnoreCase)
-            && !key.EndsWith("ing", StringComparison.OrdinalIgnoreCase)
-            && blacklist.Contains(key + "g"))
+        if (token.EndsWith("in", StringComparison.OrdinalIgnoreCase)
+            && !token.EndsWith("ing", StringComparison.OrdinalIgnoreCase)
+            && blacklist.Contains(token + "g"))
         {
             return true;
         }
 
         return false;
-    }
-
-    private static string MatchKey(string token)
-    {
-        // Straight + curly apostrophes / right single quotation marks.
-        return token.TrimEnd('\'', '\u2019', '\u2018');
     }
 
     private static bool IsWordToken(string value)
@@ -275,9 +258,9 @@ public static partial class LyricCensor
             return false;
         }
 
-        // Word tokens are letter/digit/' runs from LyricChunks; hyphens are separate chunks.
+        // Word tokens are letter/digit runs from LyricChunks; hyphens/apostrophes are separate.
         var c = value[0];
-        return char.IsLetter(c) || char.IsDigit(c) || c == '\'';
+        return char.IsLetter(c) || char.IsDigit(c);
     }
 
     private static string MaskWhole(string word, CensorMode mode, CensorSymbolStyle style)

@@ -81,10 +81,11 @@ public class LyricCensorTests
         // Older saved lists often have "fucking" / "motherfucking" but not the -in spellings.
         var words = "fucking\nmotherfucking\nbitching\n";
         var fuckin = LyricCensor.Apply("[00:01.00]fuckin' hell", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
-        Assert.Equal("[00:01.00]******* hell", fuckin);
+        Assert.Equal("[00:01.00]******' hell", fuckin);
 
         var mf = LyricCensor.Apply("[00:01.00]motherfuckin' loud", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
         Assert.DoesNotContain("motherfuckin", mf, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("'", mf);
     }
 
     [Fact]
@@ -92,13 +93,24 @@ public class LyricCensorTests
     {
         var words = "fuckin\nfucking\nmotherfuckin\nmotherfucking\nbitchin\nbitching\nshittin\nshitting\n";
         var fuckin = LyricCensor.Apply("[00:01.00]fuckin' hell", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
-        Assert.Equal("[00:01.00]******* hell", fuckin);
+        Assert.Equal("[00:01.00]******' hell", fuckin);
 
         var curly = LyricCensor.Apply("[00:01.00]motherfuckin’ yeah", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
         Assert.DoesNotContain("motherfuckin", curly, StringComparison.OrdinalIgnoreCase);
 
         var bitchin = LyricCensor.Apply("[00:01.00]bitchin'", CensorMode.Full, CensorSymbolStyle.Asterisks, words);
-        Assert.Equal("[00:01.00]********", bitchin);
+        Assert.Equal("[00:01.00]*******'", bitchin);
+    }
+
+    [Fact]
+    public void PossessiveShit_IsCensored()
+    {
+        var result = LyricCensor.Apply(
+            "[00:01.00]this shit's crazy",
+            CensorMode.Full,
+            CensorSymbolStyle.Asterisks,
+            "shit\n");
+        Assert.Equal("[00:01.00]this ****'s crazy", result);
     }
 
     [Fact]

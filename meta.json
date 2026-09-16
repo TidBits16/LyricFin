@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.15.0",
+  "version": "1.2.16.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Censor fuckin'/motherfuckin' (trailing apostrophes); -in forms match -ing list entries; add motherfuckin/bitchin/shittin to defaults.",
+  "changelog": "Treat apostrophes as word separators (shit's \u2192 shit, fuckin' \u2192 fuckin); -in still matches -ing list entries.",
   "imagePath": "backdrop.svg"
 }
