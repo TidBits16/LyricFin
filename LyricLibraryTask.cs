@@ -48,7 +48,7 @@ public class LyricLibraryTask : IScheduledTask
             {
                 Type = TaskTriggerInfoType.WeeklyTrigger,
                 DayOfWeek = DayOfWeek.Sunday,
-                TimeOfDayTicks = TimeSpan.FromHours(2).Ticks
+                TimeOfDayTicks = TimeSpan.FromHours(4).Ticks
             }
         ];
     }
