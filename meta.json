@@ -6,8 +6,8 @@
   "owner": "TidBits16",
   "category": "Metadata",
   "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.16.0",
+  "version": "1.2.17.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Treat apostrophes as word separators (shit's \u2192 shit, fuckin' \u2192 fuckin); -in still matches -ing list entries.",
+  "changelog": "Settings page polish: clearer helpers, grouped toggles, styled Advanced / force-refresh sections.",
   "imagePath": "backdrop.svg"
 }
