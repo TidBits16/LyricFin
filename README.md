@@ -5,6 +5,8 @@
 
 # LyricTagShelf: Get Timed Lyrics
 
+> <strong>LLM disclosure:</strong> This plugin is <strong>primarily developed with LLM assistance</strong> (Cursor / coding agents). Review and test before relying on it in production.
+
 > Formerly <strong>LyricFin</strong>. Same plugin GUID — settings carry over when you update.
 
 I found that the stock "LrcLib Lyrics" plugin struggles to fetch timed lyrics. It also has difficulty identifying songs so most of my collection was missing lyrics.
