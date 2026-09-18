@@ -1,4 +1,4 @@
-name: "LyricFin: Get Timed Lyrics"
+name: "LyricTagShelf: Get Timed Lyrics"
 guid: "59dd884e-2511-4dbf-8f89-761c3e2e0dee"
 version: "1.2.18.0"
 targetAbi: "10.11.0.0"
@@ -8,7 +8,7 @@ description: "Scheduled-task plugin that fetches synced LRC lyrics from LRCLIB; 
 category: "Metadata"
 owner: "TidBits16"
 artifacts:
-  - "Jellyfin.Plugin.LyricFin.dll"
+  - "Jellyfin.Plugin.LyricTagShelf.dll"
   - "backdrop.svg"
 changelog: >
   Simultaneous-run safety: preserve explicit marks on album renames, album re-mark when tracks seen, shared Deezer/MusicBrainz pace, staggered Sunday defaults.

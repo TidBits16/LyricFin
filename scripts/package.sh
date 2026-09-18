@@ -7,7 +7,7 @@ cd "$root"
 version="$(python3 - <<'PY'
 import re
 from pathlib import Path
-text = Path("Jellyfin.Plugin.LyricFin.csproj").read_text()
+text = Path("Jellyfin.Plugin.LyricTagShelf.csproj").read_text()
 raw = re.search(r"<Version>([^<]+)</Version>", text).group(1).strip()
 parts = [p for p in raw.split(".") if p != ""]
 while len(parts) < 4:
@@ -21,19 +21,19 @@ dotnet build -c Release --nologo
 
 stage="$(mktemp -d)"
 trap 'rm -rf "$stage"' EXIT
-cp "bin/Release/net9.0/Jellyfin.Plugin.LyricFin.dll" "$stage/"
+cp "bin/Release/net9.0/Jellyfin.Plugin.LyricTagShelf.dll" "$stage/"
 cp meta.json "$stage/"
 cp backdrop.svg "$stage/"
 
 mkdir -p dist
-zip_path="$root/dist/lyricfin_${version}.zip"
+zip_path="$root/dist/LyricTagShelf_${version}.zip"
 rm -f "$zip_path"
 python3 - "$stage" "$zip_path" <<'PY'
 import sys, zipfile
 from pathlib import Path
 stage, zip_path = sys.argv[1], sys.argv[2]
 with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-    for name in ("Jellyfin.Plugin.LyricFin.dll", "meta.json", "backdrop.svg"):
+    for name in ("Jellyfin.Plugin.LyricTagShelf.dll", "meta.json", "backdrop.svg"):
         zf.write(Path(stage) / name, name)
 PY
 
@@ -44,7 +44,7 @@ print(hashlib.md5(Path(sys.argv[1]).read_bytes()).hexdigest())
 PY
 )"
 timestamp="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-source_url="https://github.com/TidBits16/LyricFin/releases/download/v${version}/lyricfin_${version}.zip"
+source_url="https://github.com/TidBits16/LyricTagShelf/releases/download/v${version}/LyricTagShelf_${version}.zip"
 
 python3 - "$version" "$checksum" "$timestamp" "$source_url" <<'PY'
 import json, sys

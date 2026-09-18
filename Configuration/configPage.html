@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>LyricFin: Get Timed Lyrics</title>
+    <title>LyricTagShelf: Get Timed Lyrics</title>
     <style>
         .finConfig .finIntro { margin: 0.25em 0 1.5em; opacity: 0.75; }
         .finConfig .verticalSection { margin-top: 1.75em; }
@@ -52,7 +52,7 @@
             <div class="content-primary">
                 <form id="LfConfigForm">
                     <div class="sectionTitleContainer flex align-items-center">
-                        <h2 class="sectionTitle">LyricFin: Get Timed Lyrics</h2>
+                        <h2 class="sectionTitle">LyricTagShelf: Get Timed Lyrics</h2>
                     </div>
                     <p class="fieldDescription finIntro">Fetches <strong>timed LRC</strong> lyrics from LRCLIB. The scheduled task only fills tracks that are missing lyrics.</p>
 
@@ -218,7 +218,7 @@
                 Dashboard.showLoadingMsg();
                 return ApiClient.ajax({
                     type: 'POST',
-                    url: ApiClient.getUrl('LyricFin/FetchAll'),
+                    url: ApiClient.getUrl('LyricTagShelf/FetchAll'),
                     contentType: 'application/json',
                     dataType: 'json'
                 }).then(function () {

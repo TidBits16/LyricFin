@@ -1,4 +1,4 @@
-namespace Jellyfin.Plugin.LyricFin.Configuration;
+namespace Jellyfin.Plugin.LyricTagShelf.Configuration;
 
 public enum CensorMode
 {

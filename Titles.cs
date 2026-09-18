@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace Jellyfin.Plugin.LyricFin;
+namespace Jellyfin.Plugin.LyricTagShelf;
 
 public static partial class Titles
 {

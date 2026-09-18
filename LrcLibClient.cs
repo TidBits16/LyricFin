@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
-namespace Jellyfin.Plugin.LyricFin;
+namespace Jellyfin.Plugin.LyricTagShelf;
 
 public sealed class LrcHit
 {
@@ -25,7 +25,7 @@ public sealed class LrcLibClient
             factory,
             cache,
             TimeSpan.FromMilliseconds(350),
-            userAgent: "LyricFin/1.0.0 (https://github.com/TidBits16/LyricFin)",
+            userAgent: "LyricTagShelf/1.0.0 (https://github.com/TidBits16/LyricTagShelf)",
             maxInFlight: 1,
             retryOn429: true,
             retryOn503: true);

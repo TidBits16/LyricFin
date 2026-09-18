@@ -5,18 +5,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jellyfin.Plugin.LyricFin;
+namespace Jellyfin.Plugin.LyricTagShelf;
 
 [Authorize(Policy = Policies.RequiresElevation)]
 [ApiController]
 [Produces(MediaTypeNames.Application.Json)]
-[Route("LyricFin")]
-public sealed class LyricFinController : ControllerBase
+[Route("LyricTagShelf")]
+public sealed class LyricTagShelfController : ControllerBase
 {
     private readonly LyricEngine _engine;
     private readonly ITaskManager _tasks;
 
-    public LyricFinController(LyricEngine engine, ITaskManager tasks)
+    public LyricTagShelfController(LyricEngine engine, ITaskManager tasks)
     {
         _engine = engine;
         _tasks = tasks;

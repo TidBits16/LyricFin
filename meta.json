@@ -1,13 +1,13 @@
 {
   "guid": "59dd884e-2511-4dbf-8f89-761c3e2e0dee",
-  "name": "LyricFin: Get Timed Lyrics",
-  "description": "Fetches timed LRC lyrics from LRCLIB for your music library.",
-  "overview": "Timed LRC lyrics via LRCLIB.",
+  "name": "LyricTagShelf: Get Timed Lyrics",
+  "description": "Timed LRC lyrics.",
+  "overview": "Timed LRC lyrics.",
   "owner": "TidBits16",
   "category": "Metadata",
-  "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
-  "version": "1.2.18.0",
+  "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricTagShelf/main/backdrop.svg",
+  "version": "1.3.0.0",
   "targetAbi": "10.11.0.0",
-  "changelog": "Simultaneous-run safety: preserve explicit marks on album renames, album re-mark when tracks seen, shared Deezer/MusicBrainz pace, staggered Sunday defaults.",
+  "changelog": "Rebrand from LyricFin to LyricTagShelf; new TagShelf logo; migrate HTTP cache folder.",
   "imagePath": "backdrop.svg"
 }

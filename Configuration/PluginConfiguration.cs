@@ -1,6 +1,6 @@
 using MediaBrowser.Model.Plugins;
 
-namespace Jellyfin.Plugin.LyricFin.Configuration;
+namespace Jellyfin.Plugin.LyricTagShelf.Configuration;
 
 public class PluginConfiguration : BasePluginConfiguration
 {
@@ -13,7 +13,7 @@ public class PluginConfiguration : BasePluginConfiguration
     /// </summary>
     public bool SkipInstrumentals { get; set; } = true;
 
-    /// <summary>Comma-separated suffix/prefix markers stripped from titles before lookup (same as MusicFin).</summary>
+    /// <summary>Comma-separated suffix/prefix markers stripped from titles before lookup (same as MusicTagShelf).</summary>
     public string IgnoreTitleMarkers { get; set; } = "🅴,[Explicit]";
 
     /// <summary>How swear words are masked: None, Ending (First-Letter), Full. Root is treated as Ending.</summary>

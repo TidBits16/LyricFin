@@ -1,11 +1,11 @@
 using System.Globalization;
-using Jellyfin.Plugin.LyricFin.Configuration;
+using Jellyfin.Plugin.LyricTagShelf.Configuration;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
 using MediaBrowser.Model.Plugins;
 using MediaBrowser.Model.Serialization;
 
-namespace Jellyfin.Plugin.LyricFin;
+namespace Jellyfin.Plugin.LyricTagShelf;
 
 public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
 {
@@ -19,7 +19,7 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
 
     public static Plugin? Instance { get; private set; }
 
-    public override string Name => "LyricFin: Get Timed Lyrics";
+    public override string Name => "LyricTagShelf: Get Timed Lyrics";
 
     public override string Description =>
         "Fetches timed LRC lyrics (prefers synced) from LRCLIB for your music library.";

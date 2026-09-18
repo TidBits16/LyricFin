@@ -1,8 +1,8 @@
 using System.Text;
 using System.Text.RegularExpressions;
-using Jellyfin.Plugin.LyricFin.Configuration;
+using Jellyfin.Plugin.LyricTagShelf.Configuration;
 
-namespace Jellyfin.Plugin.LyricFin;
+namespace Jellyfin.Plugin.LyricTagShelf;
 
 /// <summary>
 /// Masks swear words in LRC payloads while leaving timestamps and tags intact.

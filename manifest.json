@@ -1,18 +1,26 @@
 [
   {
     "guid": "59dd884e-2511-4dbf-8f89-761c3e2e0dee",
-    "name": "LyricFin: Get Timed Lyrics",
-    "description": "Fetches timed LRC lyrics from LRCLIB for your music library.",
-    "overview": "Timed LRC lyrics via LRCLIB.",
+    "name": "LyricTagShelf: Get Timed Lyrics",
+    "description": "Timed LRC lyrics.",
+    "overview": "Timed LRC lyrics.",
     "owner": "TidBits16",
     "category": "Metadata",
-    "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricFin/main/backdrop.svg",
+    "imageUrl": "https://raw.githubusercontent.com/TidBits16/LyricTagShelf/main/backdrop.svg",
     "versions": [
+      {
+        "version": "1.3.0.0",
+        "changelog": "Rebrand from LyricFin to LyricTagShelf; new TagShelf logo; migrate HTTP cache folder.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.3.0.0/LyricTagShelf_1.3.0.0.zip",
+        "checksum": "6d7ccbbb8297c7c247b08de6c02f6a34",
+        "timestamp": "2026-09-18T16:05:40Z"
+      },
       {
         "version": "1.2.18.0",
         "changelog": "Simultaneous-run safety: preserve explicit marks on album renames, album re-mark when tracks seen, shared Deezer/MusicBrainz pace, staggered Sunday defaults.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.18.0/lyricfin_1.2.18.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.18.0/lyricfin_1.2.18.0.zip",
         "checksum": "95cadbda3b582b85c2186872f2f0fed0",
         "timestamp": "2026-09-17T15:05:19Z"
       },
@@ -20,7 +28,7 @@
         "version": "1.2.17.0",
         "changelog": "Settings page polish: clearer helpers, grouped toggles, styled Advanced / force-refresh sections.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.17.0/lyricfin_1.2.17.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.17.0/lyricfin_1.2.17.0.zip",
         "checksum": "710cd55d2badae2d4cdeec68b854b13d",
         "timestamp": "2026-09-17T13:33:03Z"
       },
@@ -28,7 +36,7 @@
         "version": "1.2.16.0",
         "changelog": "Treat apostrophes as word separators (shit's \u2192 shit, fuckin' \u2192 fuckin); -in still matches -ing list entries.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.16.0/lyricfin_1.2.16.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.16.0/lyricfin_1.2.16.0.zip",
         "checksum": "f8cba4b204cd318db06bbe8e4cf2925e",
         "timestamp": "2026-09-16T21:15:29Z"
       },
@@ -36,7 +44,7 @@
         "version": "1.2.15.0",
         "changelog": "Censor fuckin'/motherfuckin' (trailing apostrophes); -in forms match -ing list entries; add motherfuckin/bitchin/shittin to defaults.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.15.0/lyricfin_1.2.15.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.15.0/lyricfin_1.2.15.0.zip",
         "checksum": "eff3d09dc1369af9f53154c8801d59ba",
         "timestamp": "2026-09-16T21:08:21Z"
       },
@@ -44,7 +52,7 @@
         "version": "1.2.14.0",
         "changelog": "Skip tracks with no lyrics until cache TTL; cache LRCLIB 404s.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.14.0/lyricfin_1.2.14.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.14.0/lyricfin_1.2.14.0.zip",
         "checksum": "7608d177fe3ef0af5d891804cdcd78cd",
         "timestamp": "2026-09-16T15:27:22Z"
       },
@@ -52,15 +60,15 @@
         "version": "1.2.13.0",
         "changelog": "HTTP caches last 30 days; force fetch clears LRCLIB cache; expired lookups re-fetch individually.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.13.0/lyricfin_1.2.13.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.13.0/lyricfin_1.2.13.0.zip",
         "checksum": "5efabe8fb9e800f0b79c099db6e1bcaa",
         "timestamp": "2026-09-16T15:07:32Z"
       },
       {
         "version": "1.2.12.0",
-        "changelog": "Shared FinCommon HTTP cache/client; simplify title marker stripping.",
+        "changelog": "Shared TagShelfCommon HTTP cache/client; simplify title marker stripping.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.12.0/lyricfin_1.2.12.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.12.0/lyricfin_1.2.12.0.zip",
         "checksum": "017f867aa6b93200027cb5c9a68be767",
         "timestamp": "2026-09-15T14:30:11Z"
       },
@@ -68,47 +76,47 @@
         "version": "1.2.11.0",
         "changelog": "Whole-word blacklist censoring only (split on spaces/hyphens \u2014 ass does not match glass). Dropped stem/Root matching and the whitelist; add missed words in settings. Defaults include damn/dammit.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.11.0/LyricFin_1.2.11.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.11.0/LyricFin_1.2.11.0.zip",
         "checksum": "58b1b522ca2a0bab0d55f63b6add3510",
         "timestamp": "2026-09-15T13:22:07Z"
       },
       {
         "version": "1.2.10.0",
-        "changelog": "Solid primary backdrop; horizontal logo+title lockup; italic FinFamily tagline.",
+        "changelog": "Solid primary backdrop; horizontal logo+title lockup; italic TagShelf tagline.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.10.0/lyricfin_1.2.10.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.10.0/lyricfin_1.2.10.0.zip",
         "checksum": "acbca0e2e9239e76968789dfcc4be868",
         "timestamp": "2026-09-14T16:30:39Z"
       },
       {
         "version": "1.2.9.0",
-        "changelog": "Horizontal logo+title lockup; full-opacity FinFamily tagline under title.",
+        "changelog": "Horizontal logo+title lockup; full-opacity TagShelf tagline under title.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.9.0/lyricfin_1.2.9.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.9.0/lyricfin_1.2.9.0.zip",
         "checksum": "12871e8119cf4d713887d225ff16d2b7",
         "timestamp": "2026-09-14T16:24:46Z"
       },
       {
         "version": "1.2.8.0",
-        "changelog": "Move FinFamily tagline below title on backdrop.",
+        "changelog": "Move TagShelf tagline below title on backdrop.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.8.0/lyricfin_1.2.8.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.8.0/lyricfin_1.2.8.0.zip",
         "checksum": "93ab5bcd067a0c59bb84fc89e48b01d1",
         "timestamp": "2026-09-14T16:22:53Z"
       },
       {
         "version": "1.2.7.0",
-        "changelog": "Add FinFamily tagline under logo on backdrop.",
+        "changelog": "Add TagShelf tagline under logo on backdrop.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.7.0/lyricfin_1.2.7.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.7.0/lyricfin_1.2.7.0.zip",
         "checksum": "ec900433e68f621df68c3d2e5caa7217",
         "timestamp": "2026-09-14T16:14:54Z"
       },
       {
         "version": "1.2.6.0",
-        "changelog": "Center logo + title on backdrop; fix ExplicitFin cutoff.",
+        "changelog": "Center logo + title on backdrop; fix ExplicitTagShelf cutoff.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.6.0/lyricfin_1.2.6.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.6.0/lyricfin_1.2.6.0.zip",
         "checksum": "a08c7dc3fdcfaf8977bf7097e4f0e9b7",
         "timestamp": "2026-09-14T16:12:56Z"
       },
@@ -116,7 +124,7 @@
         "version": "1.2.5.0",
         "changelog": "Keep - prefix on scheduled task only (plugin catalog name unchanged).",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.5.0/lyricfin_1.2.5.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.5.0/lyricfin_1.2.5.0.zip",
         "checksum": "2d22e65a20e559100923dc198c5ca97a",
         "timestamp": "2026-09-14T15:42:34Z"
       },
@@ -124,7 +132,7 @@
         "version": "1.2.4.0",
         "changelog": "Sort plugin/task name to the bottom with a - prefix.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.4.0/lyricfin_1.2.4.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.4.0/lyricfin_1.2.4.0.zip",
         "checksum": "270835abd2db851428c126d067642a0b",
         "timestamp": "2026-09-14T15:24:57Z"
       },
@@ -132,7 +140,7 @@
         "version": "1.2.3.0",
         "changelog": "More resilient LRCLIB matching: album-less search, duration-less get, strip trailing artist, retry 503s.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.3.0/lyricfin_1.2.3.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.3.0/lyricfin_1.2.3.0.zip",
         "checksum": "a02e775af7b558e696d5d718bce1bc47",
         "timestamp": "2026-09-12T19:29:03Z"
       },
@@ -140,7 +148,7 @@
         "version": "1.2.2.0",
         "changelog": "Blacklist/whitelist word lists with Root stems; short stems only match at word start; clearer whitelist help.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.2.0/lyricfin_1.2.2.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.2.0/lyricfin_1.2.2.0.zip",
         "checksum": "36907a628c7b8deb29080bebece69970",
         "timestamp": "2026-09-07T17:45:17Z"
       },
@@ -148,7 +156,7 @@
         "version": "1.2.1.0",
         "changelog": "Avoid short-root false positives (e.g. ass inside glass).",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.1.0/lyricfin_1.2.1.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.1.0/lyricfin_1.2.1.0.zip",
         "checksum": "27c9b544e3563f813172ee6593d435ff",
         "timestamp": "2026-09-03T02:12:53Z"
       },
@@ -156,7 +164,7 @@
         "version": "1.2.0.0",
         "changelog": "Root censor mode (f***er), Words/Roots word list, and clearer force-button warnings.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.2.0.0/lyricfin_1.2.0.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.2.0.0/lyricfin_1.2.0.0.zip",
         "checksum": "47cdcc306070bdecdc25b48899f80b89",
         "timestamp": "2026-09-03T01:55:52Z"
       },
@@ -164,7 +172,7 @@
         "version": "1.1.0.0",
         "changelog": "Optional swear-word censoring, and weekly Sunday 2:00 AM default schedule.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.1.0.0/lyricfin_1.1.0.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.1.0.0/lyricfin_1.1.0.0.zip",
         "checksum": "c1ee2e8a1e9c2e0d75024695db561dce",
         "timestamp": "2026-09-03T01:39:09Z"
       },
@@ -172,7 +180,7 @@
         "version": "1.0.8.0",
         "changelog": "Use a single scheduled task; force-fetch from settings queues that same task.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.8.0/lyricfin_1.0.8.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.0.8.0/lyricfin_1.0.8.0.zip",
         "checksum": "41caeec4f27bd4a2b6771c3eaef8b60b",
         "timestamp": "2026-09-03T00:59:02Z"
       },
@@ -180,15 +188,15 @@
         "version": "1.0.7.0",
         "changelog": "Normalize arrow punctuation in UI copy and logs.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.7.0/lyricfin_1.0.7.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.0.7.0/lyricfin_1.0.7.0.zip",
         "checksum": "fa6b33bc2d19ff567a869451712db416",
         "timestamp": "2026-08-29T16:26:33Z"
       },
       {
         "version": "1.0.6.0",
-        "changelog": "Add MusicFin-style Ignore special characters / phrases for lyric title lookup.",
+        "changelog": "Add MusicTagShelf-style Ignore special characters / phrases for lyric title lookup.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.6.0/lyricfin_1.0.6.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.0.6.0/lyricfin_1.0.6.0.zip",
         "checksum": "4e6d55b8bc0f4cfbfc198524f613f6dd",
         "timestamp": "2026-08-29T02:14:38Z"
       },
@@ -196,7 +204,7 @@
         "version": "1.0.5.0",
         "changelog": "Default scheduled lyric fetch interval is once per week.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.5.0/lyricfin_1.0.5.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.0.5.0/lyricfin_1.0.5.0.zip",
         "checksum": "b04bb1b131949a1775ddae6023d461c7",
         "timestamp": "2026-08-29T02:08:01Z"
       },
@@ -204,7 +212,7 @@
         "version": "1.0.4.0",
         "changelog": "Skip (Instrumental) titles by default; force fetch clears their lyrics. Queue force-all as a scheduled task so the UI no longer times out.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.4.0/lyricfin_1.0.4.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.0.4.0/lyricfin_1.0.4.0.zip",
         "checksum": "d7ce963cde04a9750229cc896c6b8d86",
         "timestamp": "2026-08-29T02:07:36Z"
       },
@@ -212,7 +220,7 @@
         "version": "1.0.3.0",
         "changelog": "Use 1920x1080 backdrop SVG as the Jellyfin plugin catalog icon.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.3.0/lyricfin_1.0.3.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.0.3.0/lyricfin_1.0.3.0.zip",
         "checksum": "38ab6f747f71ccca455c79e2b0c7dc2d",
         "timestamp": "2026-08-29T01:54:13Z"
       },
@@ -220,7 +228,7 @@
         "version": "1.0.2.0",
         "changelog": "Refresh branding: flatter logo + 1920x1080 backdrop assets.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.2.0/lyricfin_1.0.2.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.0.2.0/lyricfin_1.0.2.0.zip",
         "checksum": "4f843dbdb1a825fcc75ba8df5cba0e88",
         "timestamp": "2026-08-29T01:47:01Z"
       },
@@ -228,7 +236,7 @@
         "version": "1.0.1.0",
         "changelog": "Add plugin catalog icon.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.1.0/lyricfin_1.0.1.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.0.1.0/lyricfin_1.0.1.0.zip",
         "checksum": "ce7d558e56f24883708e72aa20deb293",
         "timestamp": "2026-08-29T01:39:24Z"
       },
@@ -236,7 +244,7 @@
         "version": "1.0.0.0",
         "changelog": "Initial release: missing-only scheduled task, force Fetch all in settings, synced LRC preferred.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://github.com/TidBits16/LyricFin/releases/download/v1.0.0.0/lyricfin_1.0.0.0.zip",
+        "sourceUrl": "https://github.com/TidBits16/LyricTagShelf/releases/download/v1.0.0.0/lyricfin_1.0.0.0.zip",
         "checksum": "b097141625a0ef53ea3b10d9d984ea86",
         "timestamp": "2026-08-29T01:11:33Z"
       }

@@ -1,8 +1,8 @@
-using Jellyfin.Plugin.LyricFin;
-using Jellyfin.Plugin.LyricFin.Configuration;
+using Jellyfin.Plugin.LyricTagShelf;
+using Jellyfin.Plugin.LyricTagShelf.Configuration;
 using Xunit;
 
-namespace Jellyfin.Plugin.LyricFin.Tests;
+namespace Jellyfin.Plugin.LyricTagShelf.Tests;
 
 public class LyricCensorTests
 {

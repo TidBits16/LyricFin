@@ -1,7 +1,7 @@
 using MediaBrowser.Model.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Jellyfin.Plugin.LyricFin;
+namespace Jellyfin.Plugin.LyricTagShelf;
 
 public class LyricLibraryTask : IScheduledTask
 {
@@ -14,9 +14,9 @@ public class LyricLibraryTask : IScheduledTask
         _logger = logger;
     }
 
-    public string Name => "- LyricFin: Get Timed Lyrics";
+    public string Name => "- LyricTagShelf: Get Timed Lyrics";
 
-    public string Key => "LyricFinLibrary";
+    public string Key => "LyricTagShelfLibrary";
 
     public string Description =>
         "Fetches missing timed LRC lyrics from LRCLIB. A force fetch from plugin settings clears the HTTP cache and overwrites existing lyrics.";
@@ -35,7 +35,7 @@ public class LyricLibraryTask : IScheduledTask
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "LyricFin failed");
+            _logger.LogError(ex, "LyricTagShelf failed");
             throw;
         }
     }

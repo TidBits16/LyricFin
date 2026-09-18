@@ -1,12 +1,12 @@
 using Jellyfin.Data.Enums;
-using Jellyfin.Plugin.LyricFin.Configuration;
+using Jellyfin.Plugin.LyricTagShelf.Configuration;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Audio;
 using MediaBrowser.Controller.Library;
 using MediaBrowser.Controller.Lyrics;
 using Microsoft.Extensions.Logging;
 
-namespace Jellyfin.Plugin.LyricFin;
+namespace Jellyfin.Plugin.LyricTagShelf;
 
 public class LyricEngine
 {
@@ -49,7 +49,7 @@ public class LyricEngine
         if (force)
         {
             _cache.Clear();
-            _logger.LogInformation("LyricFin: force fetch requested (HTTP cache cleared)");
+            _logger.LogInformation("LyricTagShelf: force fetch requested (HTTP cache cleared)");
         }
 
         var cfg = Plugin.Instance?.Configuration ?? new PluginConfiguration();
@@ -81,7 +81,7 @@ public class LyricEngine
         var skipped = tracks.Count - fetchTargets.Count - clearTargets.Count;
 
         _logger.LogInformation(
-            "LyricFin: fetch {Fetch}/{Total}, clear instrumentals {Clear} ({Mode}), {Workers} workers, skipInstrumentals={Skip}",
+            "LyricTagShelf: fetch {Fetch}/{Total}, clear instrumentals {Clear} ({Mode}), {Workers} workers, skipInstrumentals={Skip}",
             fetchTargets.Count,
             tracks.Count,
             clearTargets.Count,
@@ -111,7 +111,7 @@ public class LyricEngine
                         await _lyrics.DeleteLyricsAsync(track).ConfigureAwait(false);
                         Interlocked.Increment(ref cleared);
                         _logger.LogInformation(
-                            "LyricFin cleared lyrics on instrumental {Id}: {Name}",
+                            "LyricTagShelf cleared lyrics on instrumental {Id}: {Name}",
                             track.Id,
                             track.Name);
                     }
@@ -136,7 +136,7 @@ public class LyricEngine
             catch (Exception ex)
             {
                 Interlocked.Increment(ref failed);
-                _logger.LogWarning(ex, "LyricFin failed on {Id} ({Name})", track.Id, track.Name);
+                _logger.LogWarning(ex, "LyricTagShelf failed on {Id} ({Name})", track.Id, track.Name);
             }
             finally
             {
@@ -153,7 +153,7 @@ public class LyricEngine
 
         progress.Report(100);
         _logger.LogInformation(
-            "LyricFin finished: saved {Saved}, cleared {Cleared}, no timed lyrics {Missed}, skipped {Skipped}, http {Http}/{Cache} cache",
+            "LyricTagShelf finished: saved {Saved}, cleared {Cleared}, no timed lyrics {Missed}, skipped {Skipped}, http {Http}/{Cache} cache",
             saved,
             cleared,
             failed,
@@ -203,7 +203,7 @@ public class LyricEngine
         if (saved is null)
         {
             _logger.LogWarning(
-                "LyricFin: Jellyfin rejected LRC for {Id} ({Name}) from {Source}",
+                "LyricTagShelf: Jellyfin rejected LRC for {Id} ({Name}) from {Source}",
                 track.Id,
                 track.Name,
                 hit.Source);
@@ -211,7 +211,7 @@ public class LyricEngine
         }
 
         _logger.LogInformation(
-            "LyricFin saved timed lyrics for {Id}: {Name} ({Source})",
+            "LyricTagShelf saved timed lyrics for {Id}: {Name} ({Source})",
             track.Id,
             track.Name,
             hit.Source);
